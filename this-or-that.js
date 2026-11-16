@@ -256,9 +256,11 @@ choiceB.addEventListener("click", () => {
   selectAnswer("b");
 });
 
-choiceBoth.addEventListener("click", () => {
-  selectAnswer("both");
-});
+if (choiceBoth) {
+  choiceBoth.addEventListener("click", function () {
+    selectAnswer("both");
+  });
+}
 
 
 /* PASS THE PHONE */
