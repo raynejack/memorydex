@@ -885,3 +885,91 @@ body.modal-open {
   }
 }
 
+/* ================================
+   MEMORY PHOTO GALLERY
+================================ */
+
+.modal-gallery {
+  width: 100%;
+  margin: 20px auto;
+}
+
+.modal-photo-container {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  height: 380px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #f5f0e8;
+}
+
+#modal-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+#modal-photo.hidden,
+.hidden {
+  display: none !important;
+}
+
+#modal-photo-placeholder {
+  text-align: center;
+  color: #8c789b;
+}
+
+#modal-photo-placeholder span {
+  display: block;
+  font-size: 42px;
+  margin-bottom: 8px;
+}
+
+.gallery-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.gallery-arrow {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: #eee5f2;
+  color: #705783;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.gallery-arrow:hover {
+  background: #d9c6e6;
+  transform: scale(1.08);
+}
+
+#photo-counter {
+  color: #806d89;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 600px) {
+  .modal-photo-container {
+    height: 260px;
+  }
+
+  .gallery-controls {
+    gap: 18px;
+  }
+}
+
