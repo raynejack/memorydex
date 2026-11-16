@@ -15,7 +15,6 @@
   <!-- PASSWORD SCREEN -->
   <section id="password-screen" class="password-screen">
     <div class="password-card">
-
       <p class="eyebrow">A PRIVATE LITTLE UNIVERSE</p>
 
       <div class="pokemon-icons">
@@ -45,15 +44,11 @@
           required
         >
 
-        <button type="submit">
-          UNLOCK OUR MEMORIES ♡
-        </button>
+        <button type="submit">UNLOCK OUR MEMORIES ♡</button>
       </form>
 
       <p id="error-message" role="alert"></p>
-
       <p class="footer">EST. OCTOBER 29, 2026</p>
-
     </div>
   </section>
 
@@ -66,14 +61,9 @@
     </header>
 
     <section class="hero">
-
       <p class="eyebrow">WELCOME TO OUR WORLD</p>
-
       <h1>Our First Chapter.</h1>
-
-      <p class="hero-subtitle">
-        Raymond × Vincent
-      </p>
+      <p class="hero-subtitle">Raymond × Vincent</p>
 
       <div class="trainer-pair">
         <div class="trainer-card charcadet">
@@ -112,6 +102,53 @@
 
       <button class="explore-button" onclick="showTimeline()">
         EXPLORE OUR MEMORIES →
+      </button>
+    </section>
+
+    <!-- MEMORYDEX COLLECTION -->
+    <section id="memorydex-timeline" class="memorydex-timeline hidden">
+
+      <div class="collection-heading">
+        <p class="eyebrow">OUR LITTLE COLLECTION</p>
+        <h2>The Memorydex.</h2>
+        <p>12 little moments that made us, us.</p>
+      </div>
+
+      <div class="memory-feature">
+        <p class="eyebrow">✦ OUR MOST SPECIAL DAY ✦</p>
+        <div class="feature-pokemon">☁️</div>
+        <p class="feature-date">OCTOBER 29, 2026</p>
+        <h2>And Then, There Were Us.</h2>
+        <p>
+          From almost something to officially something.
+          The day we became boyfriends, and our first kiss.
+        </p>
+        <span class="feature-location">📍 Sleepzone, Intramuros</span>
+      </div>
+
+      <div class="memory-grid" id="memory-grid">
+        <!-- Memory cards are added by script.js -->
+      </div>
+
+      <div class="collection-ending">
+        <div class="ending-heart">♡</div>
+        <p class="eyebrow">END OF CHAPTER ONE</p>
+        <h2>Memorydex Complete!</h2>
+        <p>
+          12 memories collected.<br>
+          Countless more adventures waiting.
+        </p>
+        <div class="locked-slots">
+          <span>???</span>
+          <span>???</span>
+          <span>???</span>
+        </div>
+        <p class="locked-caption">Future memories — coming soon</p>
+        <h3>This is only Chapter 1.</h3>
+      </div>
+
+      <button class="back-button" onclick="backToHome()">
+        ← BACK TO OUR LITTLE UNIVERSE
       </button>
 
     </section>
