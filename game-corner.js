@@ -152,12 +152,31 @@ function showQuestion() {
   pokemonSilhouette.textContent = "?";
 
   // Display Pokémon clues
-  quizInstruction.textContent =
-    `TYPE: ${question.type}\n` +
-    `STAGE: ${question.stage}\n` +
-    `${question.evolution}\n\n` +
-    `HINT: ${question.clue}`;
+ quizInstruction.innerHTML = `
+  <div class="clue-grid">
 
+    <div class="clue-box">
+      <span class="clue-label">TYPE</span>
+      <strong>${question.type}</strong>
+    </div>
+
+    <div class="clue-box">
+      <span class="clue-label">EVOLUTION</span>
+      <strong>${question.stage}</strong>
+    </div>
+
+    <div class="clue-box">
+      <span class="clue-label">EVOLUTION INFO</span>
+      <strong>${question.evolution}</strong>
+    </div>
+
+  </div>
+
+  <div class="hint-box">
+    <span class="clue-label">HINT</span>
+    <p>${question.clue}</p>
+  </div>
+`;
   answerFeedback.textContent = "";
   answerFeedback.className = "";
 
