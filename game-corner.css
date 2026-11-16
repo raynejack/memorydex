@@ -298,3 +298,64 @@
   }
 }
 
+
+/* =========================================
+   POKÉMON CLUE BOXES
+========================================= */
+
+#quiz-instruction {
+  margin: 20px 0;
+  line-height: 1.6;
+}
+
+.clue-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.clue-box {
+  padding: 15px;
+  border: 1px solid rgba(233, 169, 200, 0.25);
+  border-radius: 12px;
+  background: rgba(233, 169, 200, 0.07);
+  text-align: left;
+}
+
+.clue-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #e9a9c8;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+.clue-box strong {
+  display: block;
+  color: #f4f5fa;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.hint-box {
+  padding: 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid #e9a9c8;
+  text-align: left;
+}
+
+.hint-box p {
+  margin: 0;
+  color: #d5dced;
+  line-height: 1.7;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 500px) {
+  .clue-grid {
+    grid-template-columns: 1fr;
+  }
+}
