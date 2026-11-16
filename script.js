@@ -250,8 +250,7 @@ function displayPhoto() {
 
   const photoNumber = currentPhotoIndex + 1;
 
-  const basePath =
-    `images/memory-${memory.number}-${photoNumber}`;
+ const basePath = `memory-${memory.number}-${photoNumber}`;
 
   const extensions = [".jpg", ".jpeg", ".JPG", ".JPEG"];
 
