@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>This or That? | Memorydex</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="this-or-that.css">
+</head>
+
+<body>
+
+  <main class="game-page">
+
+    <!-- GAME INTRO -->
+    <section id="intro-screen" class="game-screen">
+
+      <p class="eyebrow">MEMORYDEX GAME CORNER</p>
+
+      <h1>THIS OR THAT?</h1>
+
+      <p class="game-description">
+        Two players. Fifteen choices.
+        How well do you really know each other?
+      </p>
+
+      <div class="game-decoration">♡ ✦ ♡</div>
+
+      <div class="player-form">
+
+        <label for="player-one">PLAYER ONE</label>
+        <input
+          type="text"
+          id="player-one"
+          placeholder="Enter first player's name"
+          maxlength="20"
+        >
+
+        <label for="player-two">PLAYER TWO</label>
+        <input
+          type="text"
+          id="player-two"
+          placeholder="Enter second player's name"
+          maxlength="20"
+        >
+
+        <button id="start-game" class="game-button">
+          LET'S PLAY ♡
+        </button>
+
+      </div>
+
+      <p class="game-note">
+        Answer honestly. No peeking!
+      </p>
+
+    </section>
+
+
+    <!-- QUESTION SCREEN -->
+    <section id="question-screen" class="game-screen hidden">
+
+      <div class="question-header">
+
+        <p id="current-player">PLAYER ONE'S TURN</p>
+
+        <p id="question-counter">QUESTION 1 OF 15</p>
+
+      </div>
+
+      <div class="question-progress">
+        <div id="question-progress-fill"></div>
+      </div>
+
+      <div class="question-card">
+
+        <p class="question-category" id="question-category">
+          CATEGORY
+        </p>
+
+        <h2 id="question-text">
+          Your question goes here
+        </h2>
+
+        <div class="choice-container">
+
+          <button class="choice-button" id="choice-a">
+            OPTION A
+          </button>
+
+          <div class="choice-divider">OR</div>
+
+          <button class="choice-button" id="choice-b">
+            OPTION B
+          </button>
+
+        </div>
+
+      </div>
+
+      <p class="game-note">
+        Choose only one!
+      </p>
+
+    </section>
+
+
+    <!-- PASS THE PHONE SCREEN -->
+    <section id="pass-screen" class="game-screen hidden">
+
+      <div class="pass-decoration">📱 ♡</div>
+
+      <p class="eyebrow">SWITCH PLAYERS</p>
+
+      <h2>Pass the phone!</h2>
+
+      <p id="pass-message">
+        Give the device to Player Two.
+      </p>
+
+      <p class="game-note">
+        Make sure the next player cannot see the previous answers.
+      </p>
+
+      <button id="continue-game" class="game-button">
+        I'M READY ♡
+      </button>
+
+    </section>
+
+
+    <!-- RESULTS SCREEN -->
+    <section id="result-screen" class="game-screen hidden">
+
+      <p class="eyebrow">YOUR RESULTS</p>
+
+      <h1>HOW WELL DO WE MATCH?</h1>
+
+      <div id="match-score">0%</div>
+
+      <p id="match-message"></p>
+
+      <div id="answer-comparison"></div>
+
+      <button id="play-again" class="game-button">
+        PLAY AGAIN ♡
+      </button>
+
+    </section>
+
+
+    <!-- RETURN TO GAME CORNER -->
+    <a href="game-corner.html" class="return-link">
+      ← BACK TO GAME CORNER
+    </a>
+
+  </main>
+
+  <script src="this-or-that.js"></script>
+
+</body>
+</html>
