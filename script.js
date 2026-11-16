@@ -1,4 +1,3 @@
-
 /* ==========================================
    MEMORYDEX — RAYMOND × VINCENT
 ========================================== */
@@ -163,18 +162,79 @@ const memories = [
 
 const photoFiles = {
   "001": ["memory-001-1.jpg"],
-  "002": ["memory-002-1.jpg", "memory-002-2.jpeg"],
-  "003": ["memory-003-1.jpeg", "memory-003-2.jpeg"],
-  "004": ["memory-004-1.jpg", "memory-004-2.jpg", "memory-004-3.jpg"],
-  "005": ["memory-005-1.jpeg", "memory-005-2.jpeg", "memory-005-3.jpg", "memory-005-4.jpg"],
-  "006": ["memory-006-1.jpg", "memory-006-2.jpg", "memory-006-3.jpg"],
-  "007": ["memory-007-1.jpg", "memory-007-2.jpg", "memory-007-3.jpg", "memory-007-4.jpeg"],
-  "008": ["memory-008-1.jpg", "memory-008-2.jpg", "memory-008-3.jpg", "memory-008-4.jpg", "memory-008-5.jpg"],
-  "009": ["memory-009-1.jpg", "memory-009-2.jpg", "memory-009-3.jpg", "memory-009-4.jpg", "memory-009-5.jpg"],
-  "010": ["memory-010-1.jpeg"],
-  "011": ["memory-011-1.jpeg", "memory-011-2.jpeg", "memory-011-3.jpeg", "memory-011-4.jpeg", "memory-011-5.jpeg", "memory-011-6.jpeg"],
-  "012": ["memory-012-1.jpg", "memory-012-2.jpg", "memory-012-3.jpg"]
+
+  "002": [
+    "memory-002-1.jpg",
+    "memory-002-2.jpeg"
+  ],
+
+  "003": [
+    "memory-003-1.jpeg",
+    "memory-003-2.jpeg"
+  ],
+
+  "004": [
+    "memory-004-1.jpg",
+    "memory-004-2.jpg",
+    "memory-004-3.jpg"
+  ],
+
+  "005": [
+    "memory-005-1.jpeg",
+    "memory-005-2.jpeg",
+    "memory-005-3.jpg",
+    "memory-005-4.jpg"
+  ],
+
+  "006": [
+    "memory-006-1.jpg",
+    "memory-006-2.jpg",
+    "memory-006-3.jpg"
+  ],
+
+  "007": [
+    "memory-007-1.jpg",
+    "memory-007-2.jpg",
+    "memory-007-3.jpg",
+    "memory-007-4.jpeg"
+  ],
+
+  "008": [
+    "memory-008-1.jpg",
+    "memory-008-2.jpg",
+    "memory-008-3.jpg",
+    "memory-008-4.jpg",
+    "memory-008-5.jpg"
+  ],
+
+  "009": [
+    "memory-009-1.jpg",
+    "memory-009-2.jpg",
+    "memory-009-3.jpg",
+    "memory-009-4.jpg",
+    "memory-009-5.jpg"
+  ],
+
+  "010": [
+    "memory-010-1.jpeg"
+  ],
+
+  "011": [
+    "memory-011-1.jpeg",
+    "memory-011-2.jpeg",
+    "memory-011-3.jpeg",
+    "memory-011-4.jpeg",
+    "memory-011-5.jpeg",
+    "memory-011-6.jpeg"
+  ],
+
+  "012": [
+    "memory-012-1.jpg",
+    "memory-012-2.jpg",
+    "memory-012-3.jpg"
+  ]
 };
+
 
 // ==========================================
 // PHOTOS THAT NEED 90° CLOCKWISE ROTATION
@@ -183,20 +243,27 @@ const photoFiles = {
 const rotatedPhotos = new Set([
   "004-1",
   "004-3",
+
   "005-3",
+
   "006-2",
   "006-3",
+
   "007-2",
   "007-3",
+
   "008-1",
   "008-5",
+
   "009-1",
   "009-3",
   "009-4",
+
   "012-1",
   "012-2",
   "012-3"
 ]);
+
 
 // ==========================================
 // GALLERY STATE
@@ -269,10 +336,16 @@ function renderMemories() {
 function displayPhoto() {
   const memory = memories[currentMemoryIndex];
   const photos = photoFiles[memory.number] || [];
+
   const photo = document.getElementById("modal-photo");
-  const placeholder = document.getElementById("modal-photo-placeholder");
-  const controls = document.getElementById("gallery-controls");
-  const counter = document.getElementById("photo-counter");
+  const placeholder =
+    document.getElementById("modal-photo-placeholder");
+
+  const controls =
+    document.getElementById("gallery-controls");
+
+  const counter =
+    document.getElementById("photo-counter");
 
   const filename = photos[currentPhotoIndex];
 
@@ -282,10 +355,17 @@ function displayPhoto() {
   photo.classList.add("hidden");
   placeholder.classList.add("hidden");
 
+  // Reset rotation before applying the correct one
+  photo.style.transform = "rotate(0deg)";
+
   if (!filename) {
     placeholder.classList.remove("hidden");
-    placeholder.querySelector("p").textContent = "No photo assigned to this memory.";
+
+    placeholder.querySelector("p").textContent =
+      "No photo assigned to this memory.";
+
     controls.classList.add("hidden");
+
     return;
   }
 
@@ -297,28 +377,38 @@ function displayPhoto() {
   photo.onerror = function() {
     photo.classList.add("hidden");
     placeholder.classList.remove("hidden");
+
     placeholder.querySelector("p").textContent =
       `Could not load ${filename}. Check that the file is in the repository root.`;
   };
 
- photo.alt = `Memory ${memory.number}: ${memory.title}, photo ${currentPhotoIndex + 1}`;
+  photo.alt =
+    `Memory ${memory.number}: ${memory.title}, photo ${currentPhotoIndex + 1}`;
 
-const rotationKey = `${memory.number}-${currentPhotoIndex + 1}`;
+  // ==========================================
+  // APPLY 90° CLOCKWISE ROTATION IF NEEDED
+  // ==========================================
 
-if (rotatedPhotos.has(rotationKey)) {
-  photo.style.transform = "rotate(90deg)";
-} else {
-  photo.style.transform = "rotate(0deg)";
-}
+  const rotationKey =
+    `${memory.number}-${currentPhotoIndex + 1}`;
 
-photo.src = encodeURI(filename);
-  // Encode filename for URL safety
+  if (rotatedPhotos.has(rotationKey)) {
+    photo.style.transform = "rotate(90deg)";
+  } else {
+    photo.style.transform = "rotate(0deg)";
+  }
+
+  // Load exact filename
   photo.src = encodeURI(filename);
 
-  counter.textContent = `${currentPhotoIndex + 1} / ${photos.length}`;
+  // Update counter
+  counter.textContent =
+    `${currentPhotoIndex + 1} / ${photos.length}`;
 
+  // Show navigation
   controls.classList.remove("hidden");
 
+  // Disable arrows at beginning/end
   document.getElementById("prev-photo").disabled =
     currentPhotoIndex === 0;
 
@@ -335,13 +425,18 @@ function changePhoto(direction) {
   const memory = memories[currentMemoryIndex];
   const photos = photoFiles[memory.number] || [];
 
-  const newIndex = currentPhotoIndex + direction;
+  const newIndex =
+    currentPhotoIndex + direction;
 
-  if (newIndex < 0 || newIndex >= photos.length) {
+  if (
+    newIndex < 0 ||
+    newIndex >= photos.length
+  ) {
     return;
   }
 
   currentPhotoIndex = newIndex;
+
   displayPhoto();
 }
 
@@ -399,12 +494,17 @@ function closeMemory() {
 }
 
 
-// Close by clicking outside the modal
+// ==========================================
+// CLOSE BY CLICKING OUTSIDE MODAL
+// ==========================================
+
 document.getElementById("memory-modal")
   .addEventListener("click", event => {
+
     if (event.target.id === "memory-modal") {
       closeMemory();
     }
+
   });
 
 
@@ -413,9 +513,12 @@ document.getElementById("memory-modal")
 // ==========================================
 
 document.addEventListener("keydown", event => {
-  const modal = document.getElementById("memory-modal");
+  const modal =
+    document.getElementById("memory-modal");
 
-  if (modal.classList.contains("hidden")) return;
+  if (modal.classList.contains("hidden")) {
+    return;
+  }
 
   if (event.key === "Escape") {
     closeMemory();
@@ -436,6 +539,7 @@ document.addEventListener("keydown", event => {
 // ==========================================
 
 function showTimeline() {
+
   renderMemories();
 
   document.getElementById("memorydex-timeline")
@@ -450,7 +554,9 @@ function showTimeline() {
     });
 }
 
+
 function backToHome() {
+
   closeMemory();
 
   document.getElementById("memorydex-timeline")
@@ -463,4 +569,5 @@ function backToHome() {
     top: 0,
     behavior: "smooth"
   });
+
 }
