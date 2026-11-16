@@ -41,8 +41,7 @@ const memories = [
     title: "The First Conversation",
     location: "Our OJT chat",
     story: "It started with a simple conversation about OJT. Little did we know how many memories would follow.",
-    type: "normal",
-    photoCount: 1
+    type: "normal"
   },
   {
     number: "002",
@@ -52,8 +51,7 @@ const memories = [
     title: "Day One Together",
     location: "Our first OJT day",
     story: "Our first day of OJT together. A new chapter began, even when we were still just getting to know each other.",
-    type: "psychic",
-    photoCount: 2
+    type: "psychic"
   },
   {
     number: "003",
@@ -63,8 +61,7 @@ const memories = [
     title: "Out on Site",
     location: "Our first site visit",
     story: "Our first site visit together. Another little memory added to our growing story.",
-    type: "psychic",
-    photoCount: 2
+    type: "psychic"
   },
   {
     number: "004",
@@ -74,8 +71,7 @@ const memories = [
     title: "The First Card Expo",
     location: "Ayala Malls Manila Bay",
     story: "Our first card expo, our first Pokémon TCG pack, and a new shared interest to enjoy together.",
-    type: "water",
-    photoCount: 3
+    type: "water"
   },
   {
     number: "005",
@@ -85,8 +81,7 @@ const memories = [
     title: "A Little Closer",
     location: "SM Makati · Nitori Store",
     story: "Another card expo, but this time with a first hand-holding moment. A small gesture that became a big memory.",
-    type: "psychic",
-    photoCount: 4
+    type: "psychic"
   },
   {
     number: "006",
@@ -96,8 +91,7 @@ const memories = [
     title: "A Wish Come True",
     location: "SM Mall of Asia",
     story: "Our first Pokémon Center pop-up together. A little Pokémon adventure worth remembering.",
-    type: "steel",
-    photoCount: 3
+    type: "steel"
   },
   {
     number: "007",
@@ -107,8 +101,7 @@ const memories = [
     title: "The Furina Guy",
     location: "CosplayMania · SMX Convention",
     story: "Our CosplayMania date, complete with the unforgettable Furina guy inside joke.",
-    type: "fire",
-    photoCount: 4
+    type: "fire"
   },
   {
     number: "008",
@@ -118,8 +111,7 @@ const memories = [
     title: "Picture Perfect",
     location: "One Ayala Convention Area",
     story: "Our first Pokémon card-inspired photobooth. A little snapshot of a memory we get to keep.",
-    type: "water",
-    photoCount: 5
+    type: "water"
   },
   {
     number: "009",
@@ -129,8 +121,7 @@ const memories = [
     title: "A Japanese-Inspired Date",
     location: "GALA Foodpark",
     story: "A special date in yukata. A different kind of adventure, and another lovely day together.",
-    type: "water",
-    photoCount: 5
+    type: "water"
   },
   {
     number: "010",
@@ -140,8 +131,7 @@ const memories = [
     title: "Officially Us",
     location: "Sleepzone · Intramuros",
     story: "The day we officially became boyfriends. Our first kiss, and the beginning of our next chapter.",
-    type: "special",
-    photoCount: 1
+    type: "special"
   },
   {
     number: "011",
@@ -151,8 +141,7 @@ const memories = [
     title: "Celebrating You",
     location: "ADELA BRB · A Studios Popup Photobooth",
     story: "A day to celebrate Vincent's school achievement, with dinner and three photobooths to remember it by.",
-    type: "fire",
-    photoCount: 6
+    type: "fire"
   },
   {
     number: "012",
@@ -162,10 +151,30 @@ const memories = [
     title: "Our First Staycation",
     location: "Winterhotel · Quiapo",
     story: "Our first staycation together. A cozy memory to close the first chapter of our Memorydex.",
-    type: "fire",
-    photoCount: 3
+    type: "fire"
   }
 ];
+
+
+// ==========================================
+// EXACT PHOTO FILENAMES
+// All photos are in the repository root
+// ==========================================
+
+const photoFiles = {
+  "001": ["memory-001-1.jpg"],
+  "002": ["memory-002-1.jpg", "memory-002-2.jpeg"],
+  "003": ["memory-003-1.jpeg", "memory-003-2.jpeg"],
+  "004": ["memory-004-1.jpg", "memory-004-2.jpg", "memory-004-3.jpg"],
+  "005": ["memory-005-1.jpeg", "memory-005-2.jpeg", "memory-005-3.jpg", "memory-005-4.jpg"],
+  "006": ["memory-006-1.jpg", "memory-006-2.jpg", "memory-006-3.jpg"],
+  "007": ["memory-007-1.jpg", "memory-007-2.jpg", "memory-007-3.jpg", "memory-007-4.jpeg"],
+  "008": ["memory-008-1.jpg", "memory-008-2.jpg", "memory-008-3.jpg", "memory-008-4.jpg", "memory-008-5.jpg"],
+  "009": ["memory-009-1.jpg", "memory-009-2.jpg", "memory-009-3.jpg", "memory-009-4.jpg", "memory-009-5.jpg"],
+  "010": ["memory-010-1.jpeg"],
+  "011": ["memory-011-1.jpeg", "memory-011-2.jpeg", "memory-011-3.jpeg", "memory-011-4.jpeg", "memory-011-5.jpeg", "memory-011-6.jpeg"],
+  "012": ["memory-012-1.jpg", "memory-012-2.jpg", "memory-012-3.jpg"]
+};
 
 
 // ==========================================
@@ -233,28 +242,18 @@ function renderMemories() {
 
 
 // ==========================================
-// LOAD PHOTO WITH EXTENSION FALLBACK
-// Supports .jpg, .jpeg, .JPG and .JPEG
+// DISPLAY PHOTO
 // ==========================================
 
 function displayPhoto() {
   const memory = memories[currentMemoryIndex];
-
+  const photos = photoFiles[memory.number] || [];
   const photo = document.getElementById("modal-photo");
-  const placeholder =
-    document.getElementById("modal-photo-placeholder");
-  const controls =
-    document.getElementById("gallery-controls");
-  const counter =
-    document.getElementById("photo-counter");
+  const placeholder = document.getElementById("modal-photo-placeholder");
+  const controls = document.getElementById("gallery-controls");
+  const counter = document.getElementById("photo-counter");
 
-  const photoNumber = currentPhotoIndex + 1;
-
- const basePath = `memory-${memory.number}-${photoNumber}`;
-
-  const extensions = [".jpg", ".jpeg", ".JPG", ".JPEG"];
-
-  let extensionIndex = 0;
+  const filename = photos[currentPhotoIndex];
 
   photo.onload = null;
   photo.onerror = null;
@@ -262,24 +261,11 @@ function displayPhoto() {
   photo.classList.add("hidden");
   placeholder.classList.add("hidden");
 
-  placeholder.querySelector("p").textContent =
-    "Our photo will live here.";
-
-  function tryNextExtension() {
-    if (extensionIndex >= extensions.length) {
-      photo.classList.add("hidden");
-      placeholder.classList.remove("hidden");
-
-      placeholder.querySelector("p").textContent =
-        "Photo not found. Please check the filename.";
-
-      return;
-    }
-
-    const imagePath = basePath + extensions[extensionIndex];
-    extensionIndex++;
-
-    photo.src = imagePath;
+  if (!filename) {
+    placeholder.classList.remove("hidden");
+    placeholder.querySelector("p").textContent = "No photo assigned to this memory.";
+    controls.classList.add("hidden");
+    return;
   }
 
   photo.onload = function() {
@@ -288,27 +274,26 @@ function displayPhoto() {
   };
 
   photo.onerror = function() {
-    tryNextExtension();
+    photo.classList.add("hidden");
+    placeholder.classList.remove("hidden");
+    placeholder.querySelector("p").textContent =
+      `Could not load ${filename}. Check that the file is in the repository root.`;
   };
 
-  photo.alt =
-    `Memory ${memory.number}: ${memory.title}, photo ${photoNumber}`;
+  photo.alt = `Memory ${memory.number}: ${memory.title}, photo ${currentPhotoIndex + 1}`;
 
-  tryNextExtension();
+  // Encode filename for URL safety
+  photo.src = encodeURI(filename);
 
-  // Update counter
-  counter.textContent =
-    `${photoNumber} / ${memory.photoCount}`;
+  counter.textContent = `${currentPhotoIndex + 1} / ${photos.length}`;
 
-  // Show navigation
   controls.classList.remove("hidden");
 
-  // Disable arrows at the beginning and end
   document.getElementById("prev-photo").disabled =
     currentPhotoIndex === 0;
 
   document.getElementById("next-photo").disabled =
-    currentPhotoIndex === memory.photoCount - 1;
+    currentPhotoIndex === photos.length - 1;
 }
 
 
@@ -318,10 +303,11 @@ function displayPhoto() {
 
 function changePhoto(direction) {
   const memory = memories[currentMemoryIndex];
+  const photos = photoFiles[memory.number] || [];
 
   const newIndex = currentPhotoIndex + direction;
 
-  if (newIndex < 0 || newIndex >= memory.photoCount) {
+  if (newIndex < 0 || newIndex >= photos.length) {
     return;
   }
 
