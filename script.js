@@ -1,8 +1,12 @@
+
 /* ==========================================
    MEMORYDEX — RAYMOND × VINCENT
 ========================================== */
 
+// ==========================================
 // PASSWORD
+// ==========================================
+
 const correctPassword = "October 29, 2026";
 
 document.getElementById("password-form")
@@ -243,22 +247,16 @@ const photoFiles = {
 const rotatedPhotos = new Set([
   "004-1",
   "004-3",
-
   "005-3",
-
   "006-2",
   "006-3",
-
   "007-2",
   "007-3",
-
   "008-1",
   "008-5",
-
   "009-1",
   "009-3",
   "009-4",
-
   "012-1",
   "012-2",
   "012-3"
@@ -286,46 +284,118 @@ function renderMemories() {
       data-memory-index="${index}"
       tabindex="0"
       role="button"
-      aria-label="Open memory: ${memory.title}"
+      aria-pressed="false"
+      aria-label="Reveal memory ${memory.number}: ${memory.title}"
     >
-      <div class="memory-card-top">
-        <span class="memory-number">NO. ${memory.number}</span>
-        <span class="memory-symbol">♡</span>
+
+      <div class="memory-card-inner">
+
+        <!-- CARD BACK -->
+        <div class="memory-card-back">
+          <span class="memory-number">
+            NO. ${memory.number}
+          </span>
+        </div>
+
+        <!-- CARD FRONT -->
+        <div class="memory-card-front">
+
+          <div class="memory-card-top">
+            <span class="memory-number">
+              MEMORY NO. ${memory.number}
+            </span>
+
+            <span class="memory-symbol">♡</span>
+          </div>
+
+          <div class="memory-art">
+            ${memory.art}
+          </div>
+
+          <p class="memory-date">
+            ${memory.date}
+          </p>
+
+          <h3>${memory.title}</h3>
+
+          <div class="pokemon-name">
+            ${memory.pokemon}
+          </div>
+
+          <p class="memory-location">
+            📍 ${memory.location}
+          </p>
+
+          <p class="memory-story">
+            ${memory.story}
+          </p>
+
+          <div class="memory-card-bottom">
+            <span>RAYMOND × VINCENT</span>
+            <span>♡ ${memory.number}</span>
+          </div>
+
+          <p class="card-click-hint">
+            CLICK TO VIEW PHOTOS ↗
+          </p>
+
+        </div>
+
       </div>
 
-      <div class="memory-art">${memory.art}</div>
-
-      <p class="memory-date">${memory.date}</p>
-
-      <h3>${memory.title}</h3>
-
-      <div class="pokemon-name">${memory.pokemon}</div>
-
-      <p class="memory-location">📍 ${memory.location}</p>
-
-      <p class="memory-story">${memory.story}</p>
-
-      <div class="memory-card-bottom">
-        <span>RAYMOND × VINCENT</span>
-        <span>♡ ${memory.number}</span>
-      </div>
-
-      <p class="card-click-hint">CLICK TO OPEN MEMORY ↗</p>
     </article>
   `).join("");
 
-  grid.querySelectorAll(".memory-card").forEach(card => {
-    card.addEventListener("click", () => {
-      openMemory(Number(card.dataset.memoryIndex));
-    });
 
+  // ==========================================
+  // CARD INTERACTIONS
+  // First click: flip card
+  // Second click: open photo gallery
+  // ==========================================
+
+  grid.querySelectorAll(".memory-card").forEach(card => {
+
+    function handleCardInteraction() {
+      const index = Number(card.dataset.memoryIndex);
+
+      if (card.classList.contains("flipped")) {
+
+        // Already revealed: open the gallery
+        openMemory(index);
+
+      } else {
+
+        // Still covered: reveal the card
+        card.classList.add("flipped");
+
+        card.setAttribute("aria-pressed", "true");
+
+        const memory = memories[index];
+
+        card.setAttribute(
+          "aria-label",
+          `Open memory ${memory.number}: ${memory.title}`
+        );
+
+      }
+    }
+
+
+    card.addEventListener("click", handleCardInteraction);
+
+
+    // Keyboard support: Enter and Space
     card.addEventListener("keydown", event => {
+
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        openMemory(Number(card.dataset.memoryIndex));
+        handleCardInteraction();
       }
+
     });
+
   });
+
 }
 
 
@@ -338,6 +408,7 @@ function displayPhoto() {
   const photos = photoFiles[memory.number] || [];
 
   const photo = document.getElementById("modal-photo");
+
   const placeholder =
     document.getElementById("modal-photo-placeholder");
 
@@ -385,9 +456,8 @@ function displayPhoto() {
   photo.alt =
     `Memory ${memory.number}: ${memory.title}, photo ${currentPhotoIndex + 1}`;
 
-  // ==========================================
-  // APPLY 90° CLOCKWISE ROTATION IF NEEDED
-  // ==========================================
+
+  // Apply 90° clockwise rotation if needed
 
   const rotationKey =
     `${memory.number}-${currentPhotoIndex + 1}`;
@@ -398,15 +468,19 @@ function displayPhoto() {
     photo.style.transform = "rotate(0deg)";
   }
 
+
   // Load exact filename
   photo.src = encodeURI(filename);
+
 
   // Update counter
   counter.textContent =
     `${currentPhotoIndex + 1} / ${photos.length}`;
 
+
   // Show navigation
   controls.classList.remove("hidden");
+
 
   // Disable arrows at beginning/end
   document.getElementById("prev-photo").disabled =
