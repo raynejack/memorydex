@@ -163,6 +163,10 @@ button {
   background: #ead8b0;
 }
 
+/* Space between homepage buttons */
+.explore-button + .explore-button {
+  margin-top: 12px;
+}
 #error-message {
   color: #f0a5a5;
   font-size: 12px;
