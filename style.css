@@ -808,3 +808,258 @@ body.modal-open {
     gap: 20px;
   }
 }
+
+/* ==========================================
+   MEMORYDEX — FLIP CARD SYSTEM
+========================================== */
+
+.memory-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  align-items: start;
+}
+
+/* CARD CONTAINER */
+
+.memory-card {
+  position: relative;
+  width: 100%;
+  height: 410px;
+  padding: 0;
+  overflow: visible;
+  border: none;
+  border-radius: 16px;
+  background: transparent;
+  perspective: 1200px;
+  cursor: pointer;
+  transform: none;
+  transition: none;
+}
+
+/* INNER FLIPPING ELEMENT */
+
+.memory-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  transform-style: preserve-3d;
+  transition: transform .8s cubic-bezier(.2,.75,.25,1);
+}
+
+/* FLIPPED STATE */
+
+.memory-card.flipped .memory-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* FRONT AND BACK */
+
+.memory-card-front,
+.memory-card-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* CARD BACK — YOUR CUSTOM IMAGE */
+
+.memory-card-back {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 22px;
+  background-image:
+    linear-gradient(to top, rgba(10,15,30,.65), transparent 40%),
+    url("memorydex-card-back.jpg");
+  background-size: cover;
+  background-position: center;
+  border: 1px solid rgba(215,197,157,.65);
+  box-shadow: 0 12px 30px rgba(0,0,0,.3);
+}
+
+.memory-card-back::after {
+  content: "TAP TO DISCOVER";
+  color: #f5e8c9;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 8px #000;
+}
+
+/* MEMORY NUMBER ON CARD BACK */
+
+.memory-card-back .memory-number {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  padding: 7px 11px;
+  border: 1px solid rgba(215,197,157,.65);
+  border-radius: 20px;
+  background: rgba(16,24,45,.8);
+  color: #f5e8c9;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+/* CARD FRONT — REVEALED MEMORY */
+
+.memory-card-front {
+  display: flex;
+  flex-direction: column;
+  padding: 21px;
+  text-align: center;
+  background: linear-gradient(145deg, #263653, #111b30);
+  border: 1px solid rgba(215,197,157,.75);
+  box-shadow: 0 12px 35px rgba(0,0,0,.35);
+  transform: rotateY(180deg);
+}
+
+.memory-card-front .memory-number {
+  color: #e7c98e;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.memory-card-front .memory-art {
+  display: grid;
+  place-items: center;
+  min-height: 95px;
+  margin: 12px 0;
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(215,197,157,.15);
+  border-radius: 12px;
+  font-size: 3.5rem;
+}
+
+.memory-card-front .memory-date {
+  color: #e6c58a;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.memory-card-front h3 {
+  color: #f5e8c9;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  margin: 9px 0 5px;
+}
+
+.memory-card-front .pokemon-name {
+  color: #b9c8e7;
+  font-size: .85rem;
+}
+
+.memory-card-front .memory-location {
+  margin-top: 10px;
+  color: #d9c69e;
+  font-size: .72rem;
+}
+
+.memory-card-front .memory-story {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  margin-top: 10px;
+  color: #c5ccda;
+  font-size: .75rem;
+  line-height: 1.55;
+}
+
+.memory-card-front .memory-card-bottom {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,.12);
+  font-size: .58rem;
+}
+
+.memory-card-front .card-click-hint {
+  color: #e7c98e;
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-top: 9px;
+}
+
+/* HOVER EFFECT */
+
+@media (hover: hover) {
+  .memory-card:hover .memory-card-inner {
+    filter: brightness(1.12);
+  }
+
+  .memory-card:not(.flipped):hover .memory-card-inner {
+    transform: translateY(-6px);
+  }
+}
+
+.memory-card.flipped:hover .memory-card-inner {
+  transform: rotateY(180deg);
+}
+
+.memory-card:focus-visible {
+  outline: 2px solid #e7c98e;
+  outline-offset: 5px;
+}
+
+/* RESPONSIVE FLIP CARDS */
+
+@media (max-width: 850px) {
+  .memory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .memory-card {
+    height: 390px;
+  }
+}
+
+@media (max-width: 550px) {
+  .memory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .memory-card {
+    height: 320px;
+  }
+
+  .memory-card-front {
+    padding: 12px;
+  }
+
+  .memory-card-front .memory-art {
+    min-height: 65px;
+    font-size: 2.5rem;
+    margin: 8px 0;
+  }
+
+  .memory-card-front h3 {
+    font-size: .95rem;
+  }
+
+  .memory-card-front .memory-story {
+    font-size: .68rem;
+  }
+
+  .memory-card-back {
+    padding: 12px;
+  }
+
+  .memory-card-back .memory-number {
+    top: 10px;
+    left: 10px;
+    font-size: 8px;
+  }
+}
+
+/* REDUCED MOTION ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  .memory-card-inner {
+    transition: none;
+  }
+}
