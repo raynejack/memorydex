@@ -7,62 +7,82 @@
 const pokemonQuestions = [
   {
     name: "Ditto",
-    icon: "🟣",
-    clue: "This Pokémon can transform into other Pokémon.",
+    type: "Normal",
+    stage: "Standalone Pokémon",
+    evolution: "Does not evolve",
+    clue: "It can transform into the appearance of other Pokémon.",
     options: ["Ditto", "Ralts", "Jirachi", "Feebas"]
   },
   {
     name: "Ralts",
-    icon: "👒",
-    clue: "This small Pokémon senses the emotions of people.",
+    type: "Psychic / Fairy",
+    stage: "First stage",
+    evolution: "Evolves into Kirlia",
+    clue: "It senses the emotions of people around it.",
     options: ["Kirlia", "Ralts", "Oshawott", "Altaria"]
   },
   {
     name: "Kirlia",
-    icon: "💃",
-    clue: "This elegant Pokémon evolves from Ralts.",
+    type: "Psychic / Fairy",
+    stage: "Second stage",
+    evolution: "Evolves from Ralts; can evolve into Gardevoir or Gallade",
+    clue: "It dances when it is happy.",
     options: ["Gardevoir", "Milotic", "Kirlia", "Charcadet"]
   },
   {
     name: "Oshawott",
-    icon: "🦦",
-    clue: "This Water-type Pokémon carries a shell on its belly.",
+    type: "Water",
+    stage: "First stage",
+    evolution: "Evolves into Dewott",
+    clue: "It uses a shell from its belly as a weapon.",
     options: ["Feebas", "Oshawott", "Jirachi", "Ditto"]
   },
   {
     name: "Gardevoir",
-    icon: "✨",
-    clue: "This elegant Psychic and Fairy-type Pokémon protects its Trainer.",
+    type: "Psychic / Fairy",
+    stage: "Final stage",
+    evolution: "Evolves from Kirlia",
+    clue: "It is known for protecting its Trainer using psychic power.",
     options: ["Kirlia", "Altaria", "Gardevoir", "Milotic"]
   },
   {
     name: "Jirachi",
-    icon: "⭐",
-    clue: "This Mythical Pokémon is associated with wishes.",
+    type: "Steel / Psychic",
+    stage: "Mythical Pokémon",
+    evolution: "Does not evolve",
+    clue: "It is said to grant wishes when it awakens.",
     options: ["Jirachi", "Ditto", "Ralts", "Armarouge"]
   },
   {
     name: "Charcadet",
-    icon: "🔥",
-    clue: "This Fire-type Pokémon can evolve into Armarouge or Ceruledge.",
+    type: "Fire",
+    stage: "First stage",
+    evolution: "Can evolve into Armarouge or Ceruledge",
+    clue: "Its evolution depends on the armor it receives.",
     options: ["Ceruledge", "Oshawott", "Charcadet", "Feebas"]
   },
   {
     name: "Feebas",
-    icon: "🐟",
-    clue: "This Water-type Pokémon evolves into the beautiful Milotic.",
+    type: "Water",
+    stage: "First stage",
+    evolution: "Evolves into Milotic",
+    clue: "It may look plain, but it evolves into a very elegant Pokémon.",
     options: ["Milotic", "Feebas", "Altaria", "Kirlia"]
   },
   {
     name: "Milotic",
-    icon: "🐍",
-    clue: "This graceful Water-type Pokémon evolves from Feebas.",
+    type: "Water",
+    stage: "Final stage",
+    evolution: "Evolves from Feebas",
+    clue: "It is admired for its beauty and graceful appearance.",
     options: ["Gardevoir", "Milotic", "Jirachi", "Ralts"]
   },
   {
     name: "Altaria",
-    icon: "☁️",
-    clue: "This Dragon and Flying-type Pokémon resembles a cloud.",
+    type: "Dragon / Flying",
+    stage: "Final stage",
+    evolution: "Evolves from Swablu",
+    clue: "It resembles a bird surrounded by fluffy clouds.",
     options: ["Altaria", "Ditto", "Armarouge", "Oshawott"]
   }
 ];
@@ -128,8 +148,15 @@ function showQuestion() {
   progressFill.style.width =
     `${(currentQuestion / questions.length) * 100}%`;
 
-  pokemonSilhouette.textContent = question.icon;
-  quizInstruction.textContent = question.clue;
+  // Mystery display — no misleading Pokémon emoji
+  pokemonSilhouette.textContent = "?";
+
+  // Display Pokémon clues
+  quizInstruction.textContent =
+    `TYPE: ${question.type}\n` +
+    `STAGE: ${question.stage}\n` +
+    `${question.evolution}\n\n` +
+    `HINT: ${question.clue}`;
 
   answerFeedback.textContent = "";
   answerFeedback.className = "";
@@ -241,4 +268,3 @@ function resetGame() {
 startButton.addEventListener("click", startGame);
 nextButton.addEventListener("click", nextQuestion);
 playAgainButton.addEventListener("click", startGame);
-
