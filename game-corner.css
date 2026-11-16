@@ -1,1 +1,280 @@
 
+/* =========================================
+   MEMORYDEX — GAME CORNER
+========================================= */
+
+.game-page {
+  width: min(1100px, 90%);
+  margin: 0 auto;
+  padding: 75px 0 60px;
+  min-height: 80vh;
+}
+
+.game-heading {
+  text-align: center;
+  margin-bottom: 55px;
+}
+
+.game-heading h1 {
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  letter-spacing: 0.08em;
+  margin: 12px 0;
+}
+
+.game-subtitle {
+  color: #b8c3d9;
+  font-size: 1rem;
+}
+
+.game-divider {
+  color: #e9a9c8;
+  margin-top: 25px;
+  font-size: 1.4rem;
+}
+
+.game-menu {
+  display: flex;
+  justify-content: center;
+}
+
+.game-menu-card,
+.quiz-card,
+.result-card {
+  width: min(100%, 650px);
+  padding: 38px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  background: rgba(22, 32, 57, 0.88);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+}
+
+.game-icon {
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.game-menu-card h2,
+.result-card h2 {
+  font-size: 1.8rem;
+  margin: 12px 0;
+}
+
+.game-menu-card > p:not(.eyebrow),
+.result-card > p {
+  color: #b8c3d9;
+  line-height: 1.7;
+}
+
+.game-info {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+
+.game-info span {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: #e9a9c8;
+  border: 1px solid rgba(233, 169, 200, 0.35);
+  border-radius: 30px;
+  padding: 8px 15px;
+}
+
+.game-button {
+  border: none;
+  border-radius: 30px;
+  padding: 13px 27px;
+  background: #e9a9c8;
+  color: #17213a;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.game-button:hover {
+  transform: translateY(-3px);
+  background: #f5c5dc;
+}
+
+.game-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.quiz-section,
+.result-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 35px;
+}
+
+.quiz-top {
+  width: min(100%, 650px);
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 12px;
+  color: #e9a9c8;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+.quiz-progress {
+  width: min(100%, 650px);
+  height: 7px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+
+#progress-fill {
+  width: 0%;
+  height: 100%;
+  background: #e9a9c8;
+  transition: width 0.3s ease;
+}
+
+.quiz-card {
+  width: min(100%, 650px);
+}
+
+.mystery-stage {
+  width: 100%;
+  min-height: 220px;
+  margin: 25px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle, rgba(233, 169, 200, 0.14), transparent 65%),
+    #111a30;
+  overflow: hidden;
+}
+
+.pokemon-silhouette {
+  font-size: clamp(5rem, 18vw, 9rem);
+  line-height: 1.2;
+  filter: brightness(0);
+  user-select: none;
+}
+
+#quiz-instruction {
+  color: #c6cee0;
+  margin-bottom: 22px;
+}
+
+.answer-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.answer-option {
+  padding: 15px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f4f5fa;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s;
+}
+
+.answer-option:hover:not(:disabled) {
+  background: rgba(233, 169, 200, 0.14);
+  border-color: #e9a9c8;
+}
+
+.answer-option:disabled {
+  cursor: default;
+}
+
+.answer-option.correct {
+  background: rgba(75, 170, 125, 0.2);
+  border-color: #62c995;
+}
+
+.answer-option.incorrect {
+  background: rgba(210, 90, 110, 0.18);
+  border-color: #df7789;
+}
+
+#answer-feedback {
+  min-height: 28px;
+  margin: 20px 0 10px;
+  font-weight: 600;
+  color: #e9a9c8;
+}
+
+#answer-feedback.correct {
+  color: #79d6a6;
+}
+
+#answer-feedback.incorrect {
+  color: #f08c9d;
+}
+
+.result-icon {
+  font-size: 3.5rem;
+  margin: 15px 0;
+}
+
+.final-score {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #e9a9c8;
+  margin: 15px 0;
+}
+
+.return-link {
+  display: block;
+  width: fit-content;
+  margin: 55px auto 0;
+  color: #b8c3d9;
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  transition: color 0.2s;
+}
+
+.return-link:hover {
+  color: #e9a9c8;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 600px) {
+  .game-page {
+    padding-top: 45px;
+  }
+
+  .game-menu-card,
+  .quiz-card,
+  .result-card {
+    padding: 25px 18px;
+  }
+
+  .answer-options {
+    grid-template-columns: 1fr;
+  }
+
+  .mystery-stage {
+    min-height: 180px;
+  }
+
+  .quiz-top {
+    font-size: 0.65rem;
+  }
+}
+
