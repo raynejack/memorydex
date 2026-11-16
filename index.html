@@ -230,25 +230,46 @@
         </p>
 
 
-        <!-- MEMORY PHOTO -->
-        <div class="modal-photo-container">
+      
+<!-- MEMORY PHOTO GALLERY -->
+<div class="modal-gallery">
 
-          <img
-            id="modal-photo"
-            src=""
-            alt="Our memory photo"
-            class="hidden"
-          >
+  <div class="modal-photo-container">
+    <img
+      id="modal-photo"
+      src=""
+      alt="Our memory photo"
+      class="hidden"
+    >
 
-          <div id="modal-photo-placeholder">
+    <div id="modal-photo-placeholder">
+      <span>♡</span>
+      <p>Our photo will live here.</p>
+    </div>
+  </div>
 
-            <span>♡</span>
+  <div id="gallery-controls" class="gallery-controls hidden">
+    <button
+      type="button"
+      id="prev-photo"
+      class="gallery-arrow"
+      aria-label="Previous photo"
+      onclick="changePhoto(-1)"
+    >‹</button>
 
-            <p>Our photo will live here.</p>
+    <span id="photo-counter">1 / 1</span>
 
-          </div>
+    <button
+      type="button"
+      id="next-photo"
+      class="gallery-arrow"
+      aria-label="Next photo"
+      onclick="changePhoto(1)"
+    >›</button>
+  </div>
 
-        </div>
+</div>
+
 
 
         <!-- MEMORY DETAILS -->
