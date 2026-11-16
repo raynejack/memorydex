@@ -1,1 +1,142 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10182D">
+
+  <title>Game Corner | Our Little Universe</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="game-corner.css">
+</head>
+
+<body>
+
+  <div class="stars"></div>
+
+  <header class="topbar">
+    <a href="index.html" class="logo">♡ MEMORYDEX</a>
+    <div class="top-label">R × V</div>
+  </header>
+
+  <main class="game-page">
+
+    <section class="game-heading">
+      <p class="eyebrow">A LITTLE BREAK FROM OUR ADVENTURE</p>
+
+      <h1>GAME CORNER.</h1>
+
+      <p class="game-subtitle">
+        A little fun in our Pokémon universe.
+      </p>
+
+      <div class="game-divider">♡</div>
+    </section>
+
+    <section class="game-menu">
+
+      <div class="game-menu-card">
+        <span class="game-icon">❔</span>
+
+        <p class="eyebrow">MINI GAME 001</p>
+
+        <h2>Who's That Pokémon?</h2>
+
+        <p>
+          Think you know your Pokémon?
+          Identify the mystery Pokémon from its silhouette!
+        </p>
+
+        <div class="game-info">
+          <span>10 ROUNDS</span>
+          <span>4 CHOICES</span>
+        </div>
+
+        <button id="start-game" class="game-button">
+          PLAY NOW →
+        </button>
+      </div>
+
+    </section>
+
+    <section id="quiz-section" class="quiz-section hidden">
+
+      <div class="quiz-top">
+        <span id="question-number">QUESTION 1 / 10</span>
+        <span id="score-display">SCORE: 0</span>
+      </div>
+
+      <div class="quiz-progress">
+        <div id="progress-fill"></div>
+      </div>
+
+      <div class="quiz-card">
+
+        <p class="eyebrow">WHO'S THAT POKÉMON?</p>
+
+        <div class="mystery-stage">
+          <div id="pokemon-silhouette" class="pokemon-silhouette">
+            ?
+          </div>
+        </div>
+
+        <p id="quiz-instruction">
+          Can you identify the mystery Pokémon?
+        </p>
+
+        <div id="answer-options" class="answer-options">
+        </div>
+
+        <p id="answer-feedback" aria-live="polite"></p>
+
+        <button id="next-question" class="game-button hidden">
+          NEXT QUESTION →
+        </button>
+
+      </div>
+
+    </section>
+
+    <section id="result-section" class="result-section hidden">
+
+      <div class="result-card">
+
+        <p class="eyebrow">QUIZ COMPLETE</p>
+
+        <div class="result-icon">🏆</div>
+
+        <h2>Well Played!</h2>
+
+        <p>Your final score:</p>
+
+        <div id="final-score" class="final-score">
+          0 / 10
+        </div>
+
+        <p id="result-message"></p>
+
+        <button id="play-again" class="game-button">
+          PLAY AGAIN ↻
+        </button>
+
+      </div>
+
+    </section>
+
+    <a href="index.html" class="return-link">
+      ← BACK TO OUR LITTLE UNIVERSE
+    </a>
+
+  </main>
+
+  <footer class="site-footer">
+    MADE WITH ♡ BY RAYMOND FOR VINCENT
+  </footer>
+
+  <script src="game-corner.js"></script>
+
+</body>
+</html>
+
