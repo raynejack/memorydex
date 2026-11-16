@@ -13,20 +13,28 @@ document.getElementById("password-form")
   .addEventListener("submit", function(event) {
     event.preventDefault();
 
-    const enteredPassword =
-      document.getElementById("password-input").value;
+    const enteredPassword = document
+      .getElementById("password-input")
+      .value
+      .trim();
 
-    if (enteredPassword === correctPassword) {
+    if (enteredPassword.toLowerCase() === correctPassword.toLowerCase()) {
+
       document.getElementById("password-screen")
         .classList.add("hidden");
 
       document.getElementById("memorydex-home")
         .classList.remove("hidden");
+
+      document.getElementById("error-message").textContent = "";
+
     } else {
+
       document.getElementById("error-message").textContent =
         "Not our special day, lablab. Try again! ♡";
 
       document.getElementById("password-input").value = "";
+
     }
   });
 
