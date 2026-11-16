@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10182D">
+  <title>Our Little Universe | Raymond × Vincent</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="stars"></div>
+
+  <!-- PASSWORD SCREEN -->
+  <section id="password-screen" class="password-screen">
+    <div class="password-card">
+
+      <p class="eyebrow">A PRIVATE LITTLE UNIVERSE</p>
+
+      <div class="pokemon-icons">
+        <span>🔥</span>
+        <span>♡</span>
+        <span>🐟</span>
+      </div>
+
+      <h1>Our Little Universe</h1>
+      <h2>Raymond <span>×</span> Vincent</h2>
+
+      <p class="description">
+        Every little moment has a story.<br>
+        This one belongs to us.
+      </p>
+
+      <div class="divider"></div>
+
+      <p class="hint">A little hint: The day we became lablab.</p>
+
+      <form id="password-form">
+        <input
+          type="password"
+          id="password-input"
+          placeholder="Enter our special date..."
+          autocomplete="off"
+          required
+        >
+
+        <button type="submit">
+          UNLOCK OUR MEMORIES ♡
+        </button>
+      </form>
+
+      <p id="error-message" role="alert"></p>
+
+      <p class="footer">EST. OCTOBER 29, 2026</p>
+
+    </div>
+  </section>
+
+  <!-- MEMORYDEX HOMEPAGE -->
+  <main id="memorydex-home" class="hidden">
+
+    <header class="topbar">
+      <div class="logo">♡ MEMORYDEX</div>
+      <div class="top-label">R × V</div>
+    </header>
+
+    <section class="hero">
+
+      <p class="eyebrow">WELCOME TO OUR WORLD</p>
+
+      <h1>Our First Chapter.</h1>
+
+      <p class="hero-subtitle">
+        Raymond × Vincent
+      </p>
+
+      <div class="trainer-pair">
+        <div class="trainer-card charcadet">
+          <div class="pokemon-art">🔥</div>
+          <h3>Mr. Charcadet</h3>
+          <p>Raymond</p>
+        </div>
+
+        <div class="heart">♡</div>
+
+        <div class="trainer-card feebas">
+          <div class="pokemon-art">🐟</div>
+          <h3>Mr. Feebas</h3>
+          <p>Vincent</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div>
+          <strong>12</strong>
+          <span>MEMORIES</span>
+        </div>
+        <div>
+          <strong>12</strong>
+          <span>POKÉMON</span>
+        </div>
+        <div>
+          <strong>∞</strong>
+          <span>MORE TO COME</span>
+        </div>
+      </div>
+
+      <p class="intro-quote">
+        "From an OJT conversation to our very own adventure."
+      </p>
+
+      <button class="explore-button" onclick="showTimeline()">
+        EXPLORE OUR MEMORIES →
+      </button>
+
+    </section>
+
+    <footer class="site-footer">
+      MADE WITH ♡ BY RAYMOND FOR VINCENT
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
