@@ -132,6 +132,7 @@ const questionText = document.getElementById("question-text");
 
 const choiceA = document.getElementById("choice-a");
 const choiceB = document.getElementById("choice-b");
+const choiceBoth = document.getElementById("choice-both");
 
 const progressFill = document.getElementById("question-progress-fill");
 
@@ -196,13 +197,9 @@ function showQuestion() {
   if (currentQuestion >= questions.length) {
 
     if (currentPlayer === 1) {
-
       showPassScreen();
-
     } else {
-
       showResults();
-
     }
 
     return;
@@ -220,11 +217,11 @@ function showQuestion() {
     `QUESTION ${currentQuestion + 1} OF ${questions.length}`;
 
   questionCategory.textContent = question.category;
-
   questionText.textContent = question.question;
 
   choiceA.textContent = question.a;
   choiceB.textContent = question.b;
+  choiceBoth.textContent = "BOTH! ♡";
 
   progressFill.style.width =
     `${((currentQuestion + 1) / questions.length) * 100}%`;
@@ -239,13 +236,9 @@ function showQuestion() {
 function selectAnswer(answer) {
 
   if (currentPlayer === 1) {
-
     answersOne.push(answer);
-
   } else {
-
     answersTwo.push(answer);
-
   }
 
   currentQuestion++;
@@ -261,6 +254,10 @@ choiceA.addEventListener("click", () => {
 
 choiceB.addEventListener("click", () => {
   selectAnswer("b");
+});
+
+choiceBoth.addEventListener("click", () => {
+  selectAnswer("both");
 });
 
 
@@ -305,11 +302,22 @@ function showResults() {
       matches++;
     }
 
-    const selectedOne =
-      answerOne === "a" ? question.a : question.b;
+    function getAnswerText(answer) {
 
-    const selectedTwo =
-      answerTwo === "a" ? question.a : question.b;
+      if (answer === "a") {
+        return question.a;
+      }
+
+      if (answer === "b") {
+        return question.b;
+      }
+
+      return `${question.a} + ${question.b} ♡`;
+
+    }
+
+    const selectedOne = getAnswerText(answerOne);
+    const selectedTwo = getAnswerText(answerTwo);
 
     const item = document.createElement("div");
 
