@@ -5,38 +5,61 @@
 
 // ==========================================
 // PASSWORD
+// REMEMBER UNLOCK DURING BROWSER SESSION
 // ==========================================
 
 const correctPassword = "October 29, 2026";
 
-document.getElementById("password-form")
-  .addEventListener("submit", function(event) {
-    event.preventDefault();
+const passwordScreen = document.getElementById("password-screen");
+const memorydexHome = document.getElementById("memorydex-home");
 
-    const enteredPassword = document
-      .getElementById("password-input")
-      .value
-      .trim();
+const passwordForm = document.getElementById("password-form");
+const passwordInput = document.getElementById("password-input");
+const errorMessage = document.getElementById("error-message");
 
-    if (enteredPassword.toLowerCase() === correctPassword.toLowerCase()) {
 
-      document.getElementById("password-screen")
-        .classList.add("hidden");
+// Check whether the website was already unlocked
+// during this browser session
 
-      document.getElementById("memorydex-home")
-        .classList.remove("hidden");
+if (sessionStorage.getItem("memorydexUnlocked") === "true") {
 
-      document.getElementById("error-message").textContent = "";
+  passwordScreen.classList.add("hidden");
+  memorydexHome.classList.remove("hidden");
 
-    } else {
+}
 
-      document.getElementById("error-message").textContent =
-        "Not our special day, lablab. Try again! ♡";
 
-      document.getElementById("password-input").value = "";
+// Password submission
 
-    }
-  });
+passwordForm.addEventListener("submit", function(event) {
+
+  event.preventDefault();
+
+  const enteredPassword = passwordInput.value.trim();
+
+  if (
+    enteredPassword.toLowerCase() ===
+    correctPassword.toLowerCase()
+  ) {
+
+    // Remember the successful unlock
+    sessionStorage.setItem("memorydexUnlocked", "true");
+
+    passwordScreen.classList.add("hidden");
+    memorydexHome.classList.remove("hidden");
+
+    errorMessage.textContent = "";
+
+  } else {
+
+    errorMessage.textContent =
+      "Not our special day, lablab. Try again! ♡";
+
+    passwordInput.value = "";
+
+  }
+
+});
 
 
 // ==========================================
@@ -169,7 +192,6 @@ const memories = [
 
 // ==========================================
 // EXACT PHOTO FILENAMES
-// All photos are in the repository root
 // ==========================================
 
 const photoFiles = {
@@ -284,6 +306,7 @@ let currentPhotoIndex = 0;
 // ==========================================
 
 function renderMemories() {
+
   const grid = document.getElementById("memory-grid");
 
   grid.innerHTML = memories.map((memory, index) => `
@@ -298,14 +321,12 @@ function renderMemories() {
 
       <div class="memory-card-inner">
 
-        <!-- CARD BACK -->
         <div class="memory-card-back">
           <span class="memory-number">
             NO. ${memory.number}
           </span>
         </div>
 
-        <!-- CARD FRONT -->
         <div class="memory-card-front">
 
           <div class="memory-card-top">
@@ -355,25 +376,20 @@ function renderMemories() {
   `).join("");
 
 
-  // ==========================================
   // CARD INTERACTIONS
-  // First click: flip card
-  // Second click: open photo gallery
-  // ==========================================
 
   grid.querySelectorAll(".memory-card").forEach(card => {
 
     function handleCardInteraction() {
+
       const index = Number(card.dataset.memoryIndex);
 
       if (card.classList.contains("flipped")) {
 
-        // Already revealed: open the gallery
         openMemory(index);
 
       } else {
 
-        // Still covered: reveal the card
         card.classList.add("flipped");
 
         card.setAttribute("aria-pressed", "true");
@@ -392,12 +408,14 @@ function renderMemories() {
     card.addEventListener("click", handleCardInteraction);
 
 
-    // Keyboard support: Enter and Space
     card.addEventListener("keydown", event => {
 
       if (event.key === "Enter" || event.key === " ") {
+
         event.preventDefault();
+
         handleCardInteraction();
+
       }
 
     });
@@ -412,7 +430,9 @@ function renderMemories() {
 // ==========================================
 
 function displayPhoto() {
+
   const memory = memories[currentMemoryIndex];
+
   const photos = photoFiles[memory.number] || [];
 
   const photo = document.getElementById("modal-photo");
@@ -434,10 +454,10 @@ function displayPhoto() {
   photo.classList.add("hidden");
   placeholder.classList.add("hidden");
 
-  // Reset rotation before applying the correct one
   photo.style.transform = "rotate(0deg)";
 
   if (!filename) {
+
     placeholder.classList.remove("hidden");
 
     placeholder.querySelector("p").textContent =
@@ -448,54 +468,62 @@ function displayPhoto() {
     return;
   }
 
+
   photo.onload = function() {
+
     photo.classList.remove("hidden");
+
     placeholder.classList.add("hidden");
+
   };
 
+
   photo.onerror = function() {
+
     photo.classList.add("hidden");
+
     placeholder.classList.remove("hidden");
 
     placeholder.querySelector("p").textContent =
       `Could not load ${filename}. Check that the file is in the repository root.`;
+
   };
+
 
   photo.alt =
     `Memory ${memory.number}: ${memory.title}, photo ${currentPhotoIndex + 1}`;
 
 
-  // Apply 90° clockwise rotation if needed
-
   const rotationKey =
     `${memory.number}-${currentPhotoIndex + 1}`;
 
   if (rotatedPhotos.has(rotationKey)) {
+
     photo.style.transform = "rotate(90deg)";
+
   } else {
+
     photo.style.transform = "rotate(0deg)";
+
   }
 
 
-  // Load exact filename
   photo.src = encodeURI(filename);
 
 
-  // Update counter
   counter.textContent =
     `${currentPhotoIndex + 1} / ${photos.length}`;
 
 
-  // Show navigation
   controls.classList.remove("hidden");
 
 
-  // Disable arrows at beginning/end
   document.getElementById("prev-photo").disabled =
     currentPhotoIndex === 0;
 
   document.getElementById("next-photo").disabled =
     currentPhotoIndex === photos.length - 1;
+
 }
 
 
@@ -504,22 +532,21 @@ function displayPhoto() {
 // ==========================================
 
 function changePhoto(direction) {
+
   const memory = memories[currentMemoryIndex];
+
   const photos = photoFiles[memory.number] || [];
 
-  const newIndex =
-    currentPhotoIndex + direction;
+  const newIndex = currentPhotoIndex + direction;
 
-  if (
-    newIndex < 0 ||
-    newIndex >= photos.length
-  ) {
+  if (newIndex < 0 || newIndex >= photos.length) {
     return;
   }
 
   currentPhotoIndex = newIndex;
 
   displayPhoto();
+
 }
 
 
@@ -528,6 +555,7 @@ function changePhoto(direction) {
 // ==========================================
 
 function openMemory(index) {
+
   const memory = memories[index];
 
   if (!memory) return;
@@ -561,6 +589,7 @@ function openMemory(index) {
   document.body.classList.add("modal-open");
 
   document.querySelector(".modal-close").focus();
+
 }
 
 
@@ -569,10 +598,12 @@ function openMemory(index) {
 // ==========================================
 
 function closeMemory() {
+
   document.getElementById("memory-modal")
     .classList.add("hidden");
 
   document.body.classList.remove("modal-open");
+
 }
 
 
@@ -595,6 +626,7 @@ document.getElementById("memory-modal")
 // ==========================================
 
 document.addEventListener("keydown", event => {
+
   const modal =
     document.getElementById("memory-modal");
 
@@ -613,6 +645,7 @@ document.addEventListener("keydown", event => {
   if (event.key === "ArrowLeft") {
     changePhoto(-1);
   }
+
 });
 
 
@@ -634,6 +667,7 @@ function showTimeline() {
     .scrollIntoView({
       behavior: "smooth"
     });
+
 }
 
 
@@ -653,5 +687,3 @@ function backToHome() {
   });
 
 }
-
-
