@@ -32,6 +32,10 @@
   font-size: 1.4rem;
 }
 
+/* =========================================
+   GAME MENU
+========================================= */
+
 .game-menu {
   display: flex;
   justify-content: center;
@@ -107,6 +111,10 @@
   transform: none;
 }
 
+/* =========================================
+   QUIZ SECTION
+========================================= */
+
 .quiz-section,
 .result-section {
   display: flex;
@@ -146,6 +154,10 @@
   width: min(100%, 650px);
 }
 
+/* =========================================
+   MYSTERY QUESTION MARK
+========================================= */
+
 .mystery-stage {
   width: 100%;
   min-height: 220px;
@@ -178,19 +190,70 @@
   box-shadow: 0 0 35px rgba(233, 169, 200, 0.12);
 }
 
-#quiz-instruction {
-  color: #c6cee0;
-  margin: 20px 0 25px;
-  line-height: 1.9;
-  white-space: pre-line;
-  font-size: 0.95rem;
-}
-}
+/* =========================================
+   POKÉMON CLUE BOXES
+========================================= */
 
 #quiz-instruction {
   color: #c6cee0;
-  margin-bottom: 22px;
+  margin: 20px 0 25px;
+  line-height: 1.6;
+  font-size: 0.95rem;
 }
+
+.clue-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.clue-box {
+  padding: 15px;
+  border: 1px solid rgba(233, 169, 200, 0.25);
+  border-radius: 12px;
+  background: rgba(233, 169, 200, 0.07);
+  text-align: left;
+}
+
+.clue-box:last-child {
+  grid-column: 1 / -1;
+}
+
+.clue-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #e9a9c8;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+
+.clue-box strong {
+  display: block;
+  color: #f4f5fa;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.hint-box {
+  padding: 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 3px solid #e9a9c8;
+  text-align: left;
+}
+
+.hint-box p {
+  margin: 0;
+  color: #d5dced;
+  line-height: 1.7;
+  font-size: 0.9rem;
+}
+
+/* =========================================
+   ANSWER OPTIONS
+========================================= */
 
 .answer-options {
   display: grid;
@@ -228,6 +291,10 @@
   border-color: #df7789;
 }
 
+/* =========================================
+   ANSWER FEEDBACK
+========================================= */
+
 #answer-feedback {
   min-height: 28px;
   margin: 20px 0 10px;
@@ -243,6 +310,10 @@
   color: #f08c9d;
 }
 
+/* =========================================
+   RESULTS
+========================================= */
+
 .result-icon {
   font-size: 3.5rem;
   margin: 15px 0;
@@ -254,6 +325,10 @@
   color: #e9a9c8;
   margin: 15px 0;
 }
+
+/* =========================================
+   RETURN LINK
+========================================= */
 
 .return-link {
   display: block;
@@ -270,9 +345,17 @@
   color: #e9a9c8;
 }
 
+/* =========================================
+   GENERAL
+========================================= */
+
 .hidden {
   display: none !important;
 }
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
 
 @media (max-width: 600px) {
   .game-page {
@@ -298,64 +381,12 @@
   }
 }
 
-
-/* =========================================
-   POKÉMON CLUE BOXES
-========================================= */
-
-#quiz-instruction {
-  margin: 20px 0;
-  line-height: 1.6;
-}
-
-.clue-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.clue-box {
-  padding: 15px;
-  border: 1px solid rgba(233, 169, 200, 0.25);
-  border-radius: 12px;
-  background: rgba(233, 169, 200, 0.07);
-  text-align: left;
-}
-
-.clue-label {
-  display: block;
-  margin-bottom: 7px;
-  color: #e9a9c8;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-}
-
-.clue-box strong {
-  display: block;
-  color: #f4f5fa;
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-.hint-box {
-  padding: 18px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border-left: 3px solid #e9a9c8;
-  text-align: left;
-}
-
-.hint-box p {
-  margin: 0;
-  color: #d5dced;
-  line-height: 1.7;
-  font-size: 0.9rem;
-}
-
 @media (max-width: 500px) {
   .clue-grid {
     grid-template-columns: 1fr;
+  }
+
+  .clue-box:last-child {
+    grid-column: auto;
   }
 }
