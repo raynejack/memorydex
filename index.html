@@ -129,6 +129,36 @@
       <div class="memory-grid" id="memory-grid">
         <!-- Memory cards are added by script.js -->
       </div>
+      <!-- EXPANDED MEMORY VIEWER -->
+<div id="memory-modal" class="memory-modal hidden">
+
+  <div class="memory-modal-content">
+
+    <button class="modal-close" onclick="closeMemory()" aria-label="Close">
+      ✕
+    </button>
+
+    <p class="eyebrow" id="modal-number">MEMORY NO. 001</p>
+
+    <div class="modal-photo-container">
+      <img id="modal-photo" src="" alt="Our memory photo" class="hidden">
+      <div id="modal-photo-placeholder">
+        <span>♡</span>
+        <p>Our photo will live here.</p>
+      </div>
+    </div>
+
+    <p class="memory-date" id="modal-date"></p>
+    <h2 id="modal-title"></h2>
+    <h3 id="modal-pokemon"></h3>
+
+    <p class="memory-location" id="modal-location"></p>
+    <p class="memory-story" id="modal-story"></p>
+
+    <div class="modal-footer">RAYMOND × VINCENT ♡</div>
+
+  </div>
+</div>
 
       <div class="collection-ending">
         <div class="ending-heart">♡</div>
