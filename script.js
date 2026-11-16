@@ -176,6 +176,27 @@ const photoFiles = {
   "012": ["memory-012-1.jpg", "memory-012-2.jpg", "memory-012-3.jpg"]
 };
 
+// ==========================================
+// PHOTOS THAT NEED 90° CLOCKWISE ROTATION
+// ==========================================
+
+const rotatedPhotos = new Set([
+  "004-1",
+  "004-3",
+  "005-3",
+  "006-2",
+  "006-3",
+  "007-2",
+  "007-3",
+  "008-1",
+  "008-5",
+  "009-1",
+  "009-3",
+  "009-4",
+  "012-1",
+  "012-2",
+  "012-3"
+]);
 
 // ==========================================
 // GALLERY STATE
@@ -280,8 +301,17 @@ function displayPhoto() {
       `Could not load ${filename}. Check that the file is in the repository root.`;
   };
 
-  photo.alt = `Memory ${memory.number}: ${memory.title}, photo ${currentPhotoIndex + 1}`;
+ photo.alt = `Memory ${memory.number}: ${memory.title}, photo ${currentPhotoIndex + 1}`;
 
+const rotationKey = `${memory.number}-${currentPhotoIndex + 1}`;
+
+if (rotatedPhotos.has(rotationKey)) {
+  photo.style.transform = "rotate(90deg)";
+} else {
+  photo.style.transform = "rotate(0deg)";
+}
+
+photo.src = encodeURI(filename);
   // Encode filename for URL safety
   photo.src = encodeURI(filename);
 
