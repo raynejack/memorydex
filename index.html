@@ -12,6 +12,27 @@
 
   <div class="stars"></div>
 
+  <!-- BACKGROUND MUSIC -->
+  <audio
+    id="memorydex-audio"
+    src="memorydex-music.mp3"
+    loop
+    preload="auto"
+  ></audio>
+
+  <!-- FLOATING MUSIC PLAYER -->
+  <div id="music-player" class="music-player hidden">
+    <button
+      id="music-toggle"
+      type="button"
+      aria-label="Play background music"
+      title="Play or pause music"
+    >
+      ♫
+    </button>
+    <span id="music-status">MUSIC PAUSED</span>
+  </div>
+
   <!-- PASSWORD SCREEN -->
   <section id="password-screen" class="password-screen">
     <div class="password-card">
@@ -163,7 +184,6 @@
 
 
     <!-- EXPANDED MEMORY VIEWER -->
-    <!-- Keep this OUTSIDE the collection section -->
     <div id="memory-modal" class="memory-modal hidden">
 
       <div class="memory-modal-content">
