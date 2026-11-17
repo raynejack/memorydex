@@ -20,6 +20,7 @@ const errorMessage = document.getElementById("error-message");
 
 // ==========================================
 // MEMORYDEX BACKGROUND MUSIC
+// SHARED PLAYBACK POSITION ACROSS PAGES
 // ==========================================
 
 const backgroundMusic = document.getElementById("memorydex-audio");
@@ -27,24 +28,25 @@ const musicPlayer = document.getElementById("music-player");
 const musicToggle = document.getElementById("music-toggle");
 const musicStatus = document.getElementById("music-status");
 
+const MUSIC_TIME_KEY = "memorydexMusicTime";
+const MUSIC_PLAYING_KEY = "memorydexMusicPlaying";
 
-function showMusicPlayer() {
-  if (musicPlayer) {
-    musicPlayer.classList.remove("hidden");
-  }
-}
-
-
-async function startBackgroundMusic() {
-
+function updateMusicUI() {
   if (!backgroundMusic) return;
 
-  showMusicPlayer();
+  if (backgroundMusic.paused) {
+    if (musicToggle) {
+      musicToggle.textContent = "♫";
+      musicToggle.setAttribute(
+        "aria-label",
+        "Play background music"
+      );
+    }
 
-  try {
-
-    await backgroundMusic.play();
-
+    if (musicStatus) {
+      musicStatus.textContent = "MUSIC PAUSED";
+    }
+  } else {
     if (musicToggle) {
       musicToggle.textContent = "Ⅱ";
       musicToggle.setAttribute(
@@ -56,10 +58,39 @@ async function startBackgroundMusic() {
     if (musicStatus) {
       musicStatus.textContent = "NOW PLAYING";
     }
+  }
+}
 
+function saveMusicState() {
+  if (!backgroundMusic) return;
+
+  sessionStorage.setItem(
+    MUSIC_TIME_KEY,
+    String(backgroundMusic.currentTime || 0)
+  );
+
+  sessionStorage.setItem(
+    MUSIC_PLAYING_KEY,
+    String(!backgroundMusic.paused)
+  );
+}
+
+async function startBackgroundMusic() {
+  if (!backgroundMusic) return;
+
+  if (musicPlayer) {
+    musicPlayer.classList.remove("hidden");
+  }
+
+  try {
+    await backgroundMusic.play();
+    updateMusicUI();
   } catch (error) {
-
     console.log("Autoplay was blocked by the browser.");
+
+    if (musicStatus) {
+      musicStatus.textContent = "TAP TO PLAY";
+    }
 
     if (musicToggle) {
       musicToggle.textContent = "♫";
@@ -68,77 +99,73 @@ async function startBackgroundMusic() {
         "Play background music"
       );
     }
-
-    if (musicStatus) {
-      musicStatus.textContent = "TAP TO PLAY";
-    }
-
   }
+}
 
+
+// RESTORE MUSIC POSITION WHEN THE AUDIO IS READY
+
+if (backgroundMusic) {
+  backgroundMusic.addEventListener(
+    "loadedmetadata",
+    async function () {
+      const savedTime = Number(
+        sessionStorage.getItem(MUSIC_TIME_KEY) || 0
+      );
+
+      if (
+        Number.isFinite(savedTime) &&
+        savedTime >= 0 &&
+        savedTime < backgroundMusic.duration
+      ) {
+        backgroundMusic.currentTime = savedTime;
+      }
+
+      if (musicPlayer) {
+        musicPlayer.classList.remove("hidden");
+      }
+
+      if (
+        sessionStorage.getItem(MUSIC_PLAYING_KEY) === "true" &&
+        sessionStorage.getItem("memorydexUnlocked") === "true"
+      ) {
+        await startBackgroundMusic();
+      } else {
+        updateMusicUI();
+      }
+    }
+  );
+
+  // SAVE PLAYBACK POSITION WHILE THE SONG PLAYS
+  backgroundMusic.addEventListener("timeupdate", saveMusicState);
+
+  backgroundMusic.addEventListener("play", function () {
+    sessionStorage.setItem(MUSIC_PLAYING_KEY, "true");
+    updateMusicUI();
+  });
+
+  backgroundMusic.addEventListener("pause", function () {
+    sessionStorage.setItem(MUSIC_PLAYING_KEY, "false");
+    saveMusicState();
+    updateMusicUI();
+  });
+
+  // SAVE STATE BEFORE NAVIGATING AWAY
+  window.addEventListener("pagehide", saveMusicState);
 }
 
 
 // MUSIC PLAYER BUTTON
 
 if (musicToggle && backgroundMusic) {
-
-  musicToggle.addEventListener("click", async function() {
-
+  musicToggle.addEventListener("click", async function () {
     if (backgroundMusic.paused) {
-
+      sessionStorage.setItem(MUSIC_PLAYING_KEY, "true");
       await startBackgroundMusic();
-
     } else {
-
       backgroundMusic.pause();
-
-      musicToggle.textContent = "♫";
-
-      musicToggle.setAttribute(
-        "aria-label",
-        "Play background music"
-      );
-
-      if (musicStatus) {
-        musicStatus.textContent = "MUSIC PAUSED";
-      }
-
     }
-
   });
-
-
-  backgroundMusic.addEventListener("play", function() {
-
-    musicToggle.textContent = "Ⅱ";
-
-    musicToggle.setAttribute(
-      "aria-label",
-      "Pause background music"
-    );
-
-    if (musicStatus) {
-      musicStatus.textContent = "NOW PLAYING";
-    }
-
-  });
-
-
-  backgroundMusic.addEventListener("pause", function() {
-
-    musicToggle.textContent = "♫";
-
-    musicToggle.setAttribute(
-      "aria-label",
-      "Play background music"
-    );
-
-    if (musicStatus) {
-      musicStatus.textContent = "MUSIC PAUSED";
-    }
-
-  });
-
 }
 
 
@@ -147,12 +174,20 @@ if (musicToggle && backgroundMusic) {
 // ==========================================
 
 if (sessionStorage.getItem("memorydexUnlocked") === "true") {
-
   passwordScreen.classList.add("hidden");
   memorydexHome.classList.remove("hidden");
 
-  startBackgroundMusic();
+  if (backgroundMusic && backgroundMusic.readyState >= 1) {
+    if (musicPlayer) {
+      musicPlayer.classList.remove("hidden");
+    }
 
+    if (
+      sessionStorage.getItem(MUSIC_PLAYING_KEY) === "true"
+    ) {
+      startBackgroundMusic();
+    }
+  }
 }
 
 
@@ -160,8 +195,7 @@ if (sessionStorage.getItem("memorydexUnlocked") === "true") {
 // PASSWORD SUBMISSION
 // ==========================================
 
-passwordForm.addEventListener("submit", function(event) {
-
+passwordForm.addEventListener("submit", function (event) {
   event.preventDefault();
 
   const enteredPassword = passwordInput.value.trim();
@@ -170,8 +204,6 @@ passwordForm.addEventListener("submit", function(event) {
     enteredPassword.toLowerCase() ===
     correctPassword.toLowerCase()
   ) {
-
-    // Remember the successful unlock
     sessionStorage.setItem("memorydexUnlocked", "true");
 
     passwordScreen.classList.add("hidden");
@@ -179,18 +211,16 @@ passwordForm.addEventListener("submit", function(event) {
 
     errorMessage.textContent = "";
 
-    // Start background music after password acceptance
+    // Start music after password acceptance
+    sessionStorage.setItem(MUSIC_PLAYING_KEY, "true");
     startBackgroundMusic();
 
   } else {
-
     errorMessage.textContent =
       "Not our special day, lablab. Try again! ♡";
 
     passwordInput.value = "";
-
   }
-
 });
 
 
@@ -381,9 +411,7 @@ const photoFiles = {
     "memory-009-5.jpg"
   ],
 
-  "010": [
-    "memory-010-1.jpeg"
-  ],
+  "010": ["memory-010-1.jpeg"],
 
   "011": [
     "memory-011-1.jpeg",
@@ -438,7 +466,6 @@ let currentPhotoIndex = 0;
 // ==========================================
 
 function renderMemories() {
-
   const grid = document.getElementById("memory-grid");
 
   grid.innerHTML = memories.map((memory, index) => `
@@ -507,23 +534,16 @@ function renderMemories() {
     </article>
   `).join("");
 
-
   // CARD INTERACTIONS
 
   grid.querySelectorAll(".memory-card").forEach(card => {
-
     function handleCardInteraction() {
-
       const index = Number(card.dataset.memoryIndex);
 
       if (card.classList.contains("flipped")) {
-
         openMemory(index);
-
       } else {
-
         card.classList.add("flipped");
-
         card.setAttribute("aria-pressed", "true");
 
         const memory = memories[index];
@@ -532,28 +552,18 @@ function renderMemories() {
           "aria-label",
           `Open memory ${memory.number}: ${memory.title}`
         );
-
       }
     }
 
-
     card.addEventListener("click", handleCardInteraction);
 
-
     card.addEventListener("keydown", event => {
-
       if (event.key === "Enter" || event.key === " ") {
-
         event.preventDefault();
-
         handleCardInteraction();
-
       }
-
     });
-
   });
-
 }
 
 
@@ -562,9 +572,7 @@ function renderMemories() {
 // ==========================================
 
 function displayPhoto() {
-
   const memory = memories[currentMemoryIndex];
-
   const photos = photoFiles[memory.number] || [];
 
   const photo = document.getElementById("modal-photo");
@@ -589,7 +597,6 @@ function displayPhoto() {
   photo.style.transform = "rotate(0deg)";
 
   if (!filename) {
-
     placeholder.classList.remove("hidden");
 
     placeholder.querySelector("p").textContent =
@@ -600,62 +607,43 @@ function displayPhoto() {
     return;
   }
 
-
   photo.onload = function() {
-
     photo.classList.remove("hidden");
-
     placeholder.classList.add("hidden");
-
   };
 
-
   photo.onerror = function() {
-
     photo.classList.add("hidden");
-
     placeholder.classList.remove("hidden");
 
     placeholder.querySelector("p").textContent =
       `Could not load ${filename}. Check that the file is in the repository root.`;
-
   };
-
 
   photo.alt =
     `Memory ${memory.number}: ${memory.title}, photo ${currentPhotoIndex + 1}`;
-
 
   const rotationKey =
     `${memory.number}-${currentPhotoIndex + 1}`;
 
   if (rotatedPhotos.has(rotationKey)) {
-
     photo.style.transform = "rotate(90deg)";
-
   } else {
-
     photo.style.transform = "rotate(0deg)";
-
   }
 
-
   photo.src = encodeURI(filename);
-
 
   counter.textContent =
     `${currentPhotoIndex + 1} / ${photos.length}`;
 
-
   controls.classList.remove("hidden");
-
 
   document.getElementById("prev-photo").disabled =
     currentPhotoIndex === 0;
 
   document.getElementById("next-photo").disabled =
     currentPhotoIndex === photos.length - 1;
-
 }
 
 
@@ -664,9 +652,7 @@ function displayPhoto() {
 // ==========================================
 
 function changePhoto(direction) {
-
   const memory = memories[currentMemoryIndex];
-
   const photos = photoFiles[memory.number] || [];
 
   const newIndex = currentPhotoIndex + direction;
@@ -678,7 +664,6 @@ function changePhoto(direction) {
   currentPhotoIndex = newIndex;
 
   displayPhoto();
-
 }
 
 
@@ -687,7 +672,6 @@ function changePhoto(direction) {
 // ==========================================
 
 function openMemory(index) {
-
   const memory = memories[index];
 
   if (!memory) return;
@@ -721,7 +705,6 @@ function openMemory(index) {
   document.body.classList.add("modal-open");
 
   document.querySelector(".modal-close").focus();
-
 }
 
 
@@ -730,12 +713,10 @@ function openMemory(index) {
 // ==========================================
 
 function closeMemory() {
-
   document.getElementById("memory-modal")
     .classList.add("hidden");
 
   document.body.classList.remove("modal-open");
-
 }
 
 
@@ -745,11 +726,9 @@ function closeMemory() {
 
 document.getElementById("memory-modal")
   .addEventListener("click", event => {
-
     if (event.target.id === "memory-modal") {
       closeMemory();
     }
-
   });
 
 
@@ -758,7 +737,6 @@ document.getElementById("memory-modal")
 // ==========================================
 
 document.addEventListener("keydown", event => {
-
   const modal =
     document.getElementById("memory-modal");
 
@@ -777,7 +755,6 @@ document.addEventListener("keydown", event => {
   if (event.key === "ArrowLeft") {
     changePhoto(-1);
   }
-
 });
 
 
@@ -786,7 +763,6 @@ document.addEventListener("keydown", event => {
 // ==========================================
 
 function showTimeline() {
-
   renderMemories();
 
   document.getElementById("memorydex-timeline")
@@ -799,12 +775,10 @@ function showTimeline() {
     .scrollIntoView({
       behavior: "smooth"
     });
-
 }
 
 
 function backToHome() {
-
   closeMemory();
 
   document.getElementById("memorydex-timeline")
@@ -817,5 +791,4 @@ function backToHome() {
     top: 0,
     behavior: "smooth"
   });
-
 }
