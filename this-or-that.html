@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10182D">
 
   <title>This or That? | Memorydex</title>
 
@@ -165,7 +166,125 @@
 
   </main>
 
+  <!-- BACKGROUND MUSIC -->
+  <audio
+    id="memorydex-audio"
+    src="memorydex-music.mp3"
+    loop
+    preload="auto"
+  ></audio>
+
+  <!-- MUSIC PLAYER -->
+  <div id="music-player" class="music-player hidden">
+
+    <div class="music-player-info">
+      <span class="music-icon">♫</span>
+
+      <div class="music-details">
+        <p class="music-title">Nasa Ulap</p>
+        <p class="music-artist">THE RED STRINGS</p>
+      </div>
+    </div>
+
+    <button
+      id="music-toggle"
+      type="button"
+      aria-label="Play background music"
+      title="Play or pause music"
+    >
+      ♫
+    </button>
+
+    <span id="music-status">MUSIC PAUSED</span>
+
+    <p class="music-message">
+      This song reminds me of us. ♡
+    </p>
+
+  </div>
+
   <script src="this-or-that.js"></script>
+
+  <!-- MUSIC PLAYBACK MEMORY -->
+  <script>
+    const music = document.getElementById("memorydex-audio");
+    const musicPlayer = document.getElementById("music-player");
+    const musicToggle = document.getElementById("music-toggle");
+    const musicStatus = document.getElementById("music-status");
+
+    const MUSIC_TIME_KEY = "memorydexMusicTime";
+    const MUSIC_PLAYING_KEY = "memorydexMusicPlaying";
+
+    function updateMusicButton() {
+      if (music.paused) {
+        musicToggle.textContent = "♫";
+        musicToggle.setAttribute("aria-label", "Play background music");
+        musicStatus.textContent = "MUSIC PAUSED";
+      } else {
+        musicToggle.textContent = "Ⅱ";
+        musicToggle.setAttribute("aria-label", "Pause background music");
+        musicStatus.textContent = "NOW PLAYING";
+      }
+    }
+
+    music.addEventListener("loadedmetadata", async function () {
+      const savedTime = Number(sessionStorage.getItem(MUSIC_TIME_KEY) || 0);
+
+      if (
+        Number.isFinite(savedTime) &&
+        savedTime >= 0 &&
+        savedTime < music.duration
+      ) {
+        music.currentTime = savedTime;
+      }
+
+      musicPlayer.classList.remove("hidden");
+
+      if (sessionStorage.getItem(MUSIC_PLAYING_KEY) === "true") {
+        try {
+          await music.play();
+        } catch (error) {
+          musicStatus.textContent = "TAP TO CONTINUE";
+        }
+      }
+
+      updateMusicButton();
+    });
+
+    music.addEventListener("timeupdate", function () {
+      sessionStorage.setItem(MUSIC_TIME_KEY, String(music.currentTime));
+    });
+
+    music.addEventListener("play", function () {
+      sessionStorage.setItem(MUSIC_PLAYING_KEY, "true");
+      updateMusicButton();
+    });
+
+    music.addEventListener("pause", function () {
+      sessionStorage.setItem(MUSIC_PLAYING_KEY, "false");
+      updateMusicButton();
+    });
+
+    musicToggle.addEventListener("click", async function () {
+      if (music.paused) {
+        try {
+          await music.play();
+        } catch (error) {
+          musicStatus.textContent = "TAP TO PLAY";
+        }
+      } else {
+        music.pause();
+      }
+    });
+
+    window.addEventListener("pagehide", function () {
+      sessionStorage.setItem(MUSIC_TIME_KEY, String(music.currentTime));
+      sessionStorage.setItem(
+        MUSIC_PLAYING_KEY,
+        String(!music.paused)
+      );
+    });
+  </script>
 
 </body>
 </html>
