@@ -55,20 +55,9 @@ let editingLetterId = null;
 // HELPER FUNCTIONS
 // ==========================================
 
-function getDisplayName(email) {
-  if (!email) return "Friend";
-
-  const username = email.split("@")[0].toLowerCase();
-
-  if (username.includes("raymond") || username.includes("rayne")) {
-    return "Raymond";
-  }
-
-  if (username.includes("vincent")) {
-    return "Vincent";
-  }
-
-  return email.split("@")[0];
+// GET DISPLAY NAME FROM SUPABASE USER METADATA
+function getDisplayName(user) {
+  return user?.user_metadata?.display_name || "Friend";
 }
 
 function showLoginMessage(message) {
@@ -96,7 +85,7 @@ function showDashboard(user) {
   dashboard.classList.remove("hidden");
 
   welcomeMessage.textContent =
-    `Welcome back, ${getDisplayName(user.email)} ♡`;
+    `Welcome back, ${getDisplayName(user)} ♡`;
 
   showLoginMessage("");
   loadLetters();
