@@ -18,18 +18,147 @@ const passwordInput = document.getElementById("password-input");
 const errorMessage = document.getElementById("error-message");
 
 
-// Check whether the website was already unlocked
-// during this browser session
+// ==========================================
+// MEMORYDEX BACKGROUND MUSIC
+// ==========================================
+
+const backgroundMusic = document.getElementById("memorydex-audio");
+const musicPlayer = document.getElementById("music-player");
+const musicToggle = document.getElementById("music-toggle");
+const musicStatus = document.getElementById("music-status");
+
+
+function showMusicPlayer() {
+  if (musicPlayer) {
+    musicPlayer.classList.remove("hidden");
+  }
+}
+
+
+async function startBackgroundMusic() {
+
+  if (!backgroundMusic) return;
+
+  showMusicPlayer();
+
+  try {
+
+    await backgroundMusic.play();
+
+    if (musicToggle) {
+      musicToggle.textContent = "Ⅱ";
+      musicToggle.setAttribute(
+        "aria-label",
+        "Pause background music"
+      );
+    }
+
+    if (musicStatus) {
+      musicStatus.textContent = "NOW PLAYING";
+    }
+
+  } catch (error) {
+
+    console.log("Autoplay was blocked by the browser.");
+
+    if (musicToggle) {
+      musicToggle.textContent = "♫";
+      musicToggle.setAttribute(
+        "aria-label",
+        "Play background music"
+      );
+    }
+
+    if (musicStatus) {
+      musicStatus.textContent = "TAP TO PLAY";
+    }
+
+  }
+
+}
+
+
+// MUSIC PLAYER BUTTON
+
+if (musicToggle && backgroundMusic) {
+
+  musicToggle.addEventListener("click", async function() {
+
+    if (backgroundMusic.paused) {
+
+      await startBackgroundMusic();
+
+    } else {
+
+      backgroundMusic.pause();
+
+      musicToggle.textContent = "♫";
+
+      musicToggle.setAttribute(
+        "aria-label",
+        "Play background music"
+      );
+
+      if (musicStatus) {
+        musicStatus.textContent = "MUSIC PAUSED";
+      }
+
+    }
+
+  });
+
+
+  backgroundMusic.addEventListener("play", function() {
+
+    musicToggle.textContent = "Ⅱ";
+
+    musicToggle.setAttribute(
+      "aria-label",
+      "Pause background music"
+    );
+
+    if (musicStatus) {
+      musicStatus.textContent = "NOW PLAYING";
+    }
+
+  });
+
+
+  backgroundMusic.addEventListener("pause", function() {
+
+    musicToggle.textContent = "♫";
+
+    musicToggle.setAttribute(
+      "aria-label",
+      "Play background music"
+    );
+
+    if (musicStatus) {
+      musicStatus.textContent = "MUSIC PAUSED";
+    }
+
+  });
+
+}
+
+
+// ==========================================
+// CHECK WHETHER WEBSITE IS ALREADY UNLOCKED
+// ==========================================
 
 if (sessionStorage.getItem("memorydexUnlocked") === "true") {
 
   passwordScreen.classList.add("hidden");
   memorydexHome.classList.remove("hidden");
 
+  startBackgroundMusic();
+
 }
 
 
-// Password submission
+// ==========================================
+// PASSWORD SUBMISSION
+// ==========================================
 
 passwordForm.addEventListener("submit", function(event) {
 
@@ -49,6 +178,9 @@ passwordForm.addEventListener("submit", function(event) {
     memorydexHome.classList.remove("hidden");
 
     errorMessage.textContent = "";
+
+    // Start background music after password acceptance
+    startBackgroundMusic();
 
   } else {
 
