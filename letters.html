@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10182D">
+
+  <title>Letters to Each Other | Memorydex</title>
+
+  <link rel="stylesheet" href="letters.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <div class="stars"></div>
+
+  <header class="letters-topbar">
+    <a href="index.html" class="logo">♡ MEMORYDEX</a>
+    <span class="top-label">R × V</span>
+  </header>
+
+  <main class="letters-main">
+
+    <!-- LOGIN SCREEN -->
+    <section id="login-screen" class="login-screen">
+
+      <p class="eyebrow">A LITTLE SPACE FOR OUR WORDS</p>
+
+      <div class="letter-icon">✉</div>
+
+      <h1>Letters to Each Other</h1>
+
+      <p class="login-description">
+        Some things are better written.
+        Welcome to our little corner of letters.
+      </p>
+
+      <form id="login-form">
+
+        <label for="email">EMAIL ADDRESS</label>
+
+        <input
+          type="email"
+          id="email"
+          placeholder="Enter your email"
+          autocomplete="email"
+          required
+        >
+
+        <label for="password">PASSWORD</label>
+
+        <input
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+          autocomplete="current-password"
+          required
+        >
+
+        <button type="submit" id="login-button">
+          SIGN IN ♡
+        </button>
+
+        <p id="login-message" role="alert"></p>
+
+      </form>
+
+      <a href="index.html" class="back-link">
+        ← BACK TO OUR LITTLE UNIVERSE
+      </a>
+
+    </section>
+
+
+    <!-- LETTERS DASHBOARD -->
+    <section id="letters-dashboard" class="hidden">
+
+      <div class="dashboard-heading">
+        <p class="eyebrow">OUR LITTLE COLLECTION</p>
+        <h1>Our Letters.</h1>
+        <p id="welcome-message"></p>
+      </div>
+
+      <button id="write-letter-button">
+        ✉ WRITE A LETTER
+      </button>
+
+      <div id="letter-form-container" class="hidden">
+
+        <h2 id="letter-form-heading">A New Letter</h2>
+
+        <form id="letter-form">
+
+          <label for="letter-title">LETTER TITLE</label>
+          <input
+            type="text"
+            id="letter-title"
+            maxlength="120"
+            placeholder="Give your letter a title..."
+            required
+          >
+
+          <label for="letter-content">YOUR LETTER</label>
+          <textarea
+            id="letter-content"
+            rows="10"
+            placeholder="Write whatever is on your mind..."
+            required
+          ></textarea>
+
+          <button type="submit" id="save-letter-button">
+            SAVE LETTER ♡
+          </button>
+
+          <button type="button" id="cancel-letter-button">
+            CANCEL
+          </button>
+
+        </form>
+
+      </div>
+
+      <div id="letters-list"></div>
+
+      <p id="letters-message" role="status"></p>
+
+      <button id="logout-button">
+        SIGN OUT
+      </button>
+
+      <a href="index.html" class="back-link">
+        ← BACK TO OUR LITTLE UNIVERSE
+      </a>
+
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    MADE WITH ♡ BY RAYMOND FOR VINCENT
+  </footer>
+
+  <script src="letters.js"></script>
+
+</body>
+</html>
