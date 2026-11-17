@@ -163,10 +163,12 @@ button {
   background: #ead8b0;
 }
 
-/* Space between homepage buttons */
+/* SPACE BETWEEN HOMEPAGE BUTTONS */
+
 .explore-button + .explore-button {
   margin-top: 12px;
 }
+
 #error-message {
   color: #f0a5a5;
   font-size: 12px;
@@ -816,7 +818,6 @@ body.modal-open {
 
 /* ==========================================
    MEMORYDEX — FLIP CARD SYSTEM
-   Corrected 3D flip and hover behavior
 ========================================== */
 
 .memory-grid {
@@ -850,10 +851,8 @@ body.modal-open {
   width: 100%;
   height: 100%;
   border-radius: 16px;
-
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-
   transition: transform .8s cubic-bezier(.2,.75,.25,1);
 }
 
@@ -874,7 +873,6 @@ body.modal-open {
   height: 100%;
   overflow: hidden;
   border-radius: 16px;
-
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
@@ -886,14 +884,11 @@ body.modal-open {
   align-items: flex-end;
   justify-content: center;
   padding: 22px;
-
   background-image:
     linear-gradient(to top, rgba(10,15,30,.65), transparent 40%),
     url("memorydex-card-back.jpg");
-
   background-size: cover;
   background-position: center;
-
   border: 1px solid rgba(215,197,157,.65);
   box-shadow: 0 12px 30px rgba(0,0,0,.3);
 }
@@ -913,13 +908,10 @@ body.modal-open {
   top: 18px;
   left: 18px;
   padding: 7px 11px;
-
   border: 1px solid rgba(215,197,157,.65);
   border-radius: 20px;
-
   background: rgba(16,24,45,.8);
   color: #f5e8c9;
-
   font-size: 10px;
   letter-spacing: 2px;
 }
@@ -931,11 +923,9 @@ body.modal-open {
   flex-direction: column;
   padding: 21px;
   text-align: center;
-
   background: linear-gradient(145deg, #263653, #111b30);
   border: 1px solid rgba(215,197,157,.75);
   box-shadow: 0 12px 35px rgba(0,0,0,.35);
-
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg);
 }
@@ -951,11 +941,9 @@ body.modal-open {
   place-items: center;
   min-height: 95px;
   margin: 12px 0;
-
   background: rgba(255,255,255,.045);
   border: 1px solid rgba(215,197,157,.15);
   border-radius: 12px;
-
   font-size: 3.5rem;
 }
 
@@ -988,7 +976,6 @@ body.modal-open {
   min-height: 0;
   overflow: hidden;
   margin-top: 10px;
-
   color: #c5ccda;
   font-size: .75rem;
   line-height: 1.55;
@@ -1008,16 +995,13 @@ body.modal-open {
   margin-top: 9px;
 }
 
-/* HOVER — NO FILTERS ON THE 3D INNER ELEMENT */
+/* HOVER */
 
 @media (hover: hover) {
-
-  /* Lift the whole card slightly */
   .memory-card:hover {
     transform: translateY(-6px);
   }
 
-  /* Subtle border highlight without affecting 3D rendering */
   .memory-card:not(.flipped):hover .memory-card-back {
     border-color: #e7c98e;
   }
@@ -1025,7 +1009,6 @@ body.modal-open {
   .memory-card.flipped:hover .memory-card-front {
     border-color: #e7c98e;
   }
-
 }
 
 /* KEYBOARD FOCUS */
@@ -1107,58 +1090,76 @@ body.modal-open {
   right: 28px;
   bottom: 28px;
   z-index: 9999;
-
-  width: 285px;
-  padding: 16px 18px;
-
+  width: 300px;
+  padding: 17px 18px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-
-  background: rgba(27, 41, 69, 0.94);
-  border: 1px solid rgba(215, 197, 157, 0.55);
+  gap: 12px;
+  background: rgba(27, 41, 69, .96);
+  border: 1px solid rgba(215, 197, 157, .6);
   border-radius: 16px;
-
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, .4);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-
   animation: musicPlayerIn .5s ease;
 }
 
-/* PLAYER HEADER */
+/* SONG INFORMATION */
 
-.music-player::before {
-  content: "♫  MEMORYDEX SOUNDTRACK";
+.music-player-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-right: 45px;
+}
 
-  display: block;
+.music-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(215, 197, 157, .5);
+  border-radius: 12px;
+  background: rgba(215, 197, 157, .13);
   color: var(--gold);
+  font-size: 21px;
+}
 
+.music-details {
+  min-width: 0;
+}
+
+.music-title {
+  color: var(--cream);
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.music-artist {
+  margin-top: 4px;
+  color: var(--gold);
   font-size: 9px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1.7px;
 }
 
 /* PLAY BUTTON */
 
 #music-toggle {
   position: absolute;
-  top: 43px;
-  right: 17px;
-
+  top: 20px;
+  right: 18px;
   width: 38px;
   height: 38px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border: 1px solid rgba(215, 197, 157, 0.5);
+  border: 1px solid rgba(215, 197, 157, .5);
   border-radius: 50%;
-
   background: var(--gold);
   color: var(--navy);
-
   font-size: 15px;
   transition: all .25s ease;
 }
@@ -1168,26 +1169,21 @@ body.modal-open {
   transform: scale(1.08);
 }
 
-/* SONG INFORMATION */
+/* PLAYBACK STATUS */
 
 #music-status {
   display: block;
-  padding-right: 48px;
-
   color: var(--muted);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 1.5px;
 }
 
-.music-player::after {
-  content: "This song reminds me of us. ♡";
+/* PERSONAL MESSAGE */
 
-  display: block;
-  padding-top: 9px;
-
-  border-top: 1px solid rgba(215, 197, 157, 0.2);
-
+.music-message {
+  padding-top: 10px;
+  border-top: 1px solid rgba(215, 197, 157, .2);
   color: var(--cream);
   font-family: 'Playfair Display', serif;
   font-size: 13px;
@@ -1195,32 +1191,31 @@ body.modal-open {
   letter-spacing: .2px;
 }
 
-/* APPEARANCE ANIMATION */
+/* PLAYER ANIMATION */
 
 @keyframes musicPlayerIn {
   from {
     opacity: 0;
     transform: translateY(15px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* MOBILE */
+/* MUSIC PLAYER MOBILE */
 
 @media (max-width: 550px) {
   .music-player {
     right: 14px;
     bottom: 14px;
-    width: 245px;
-    padding: 13px 15px;
+    width: 265px;
+    padding: 14px 15px;
   }
 
   #music-toggle {
     right: 14px;
-    top: 39px;
+    top: 16px;
   }
 }
